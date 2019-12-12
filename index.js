@@ -17,6 +17,11 @@ app.get('/', (req,res) => {
     res.render('home')
 })
 
+// Always the bottom route, to deal with error
+app.get('*', (req,res) => {
+    res.render('error404')
+})
+
 app.listen(3000, () => {
     console.log('You are connected! ☕️🎧')
 })
