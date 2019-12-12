@@ -1,0 +1,52 @@
+<h1>Signup</h1>
+
+<div class="row">
+    <form method="POST" action="/auth/signup" class="col s12">
+        <div class="row">
+        <div class="input-field col s6">
+            <input id="firstName" type="email" class="validate" name="firstName">
+            <label for="firstName">First Name</label>
+        </div>
+        <div class="input-field col s6">
+            <input id="lastName" type="text" class="validate" name="lastName">
+            <label for="lastName">Last Name</label>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="input-field col s12">
+            <input id="profile" type="url" class="validate" name="profilePic">
+            <label for="profile">Profile Picture URL</label>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="input-field col s12">
+            <input id="userName" type="email" class="validate" name="userName">
+            <label for="userName">Username</label>
+        </div>
+        </div>
+        
+        <div class="row">
+        <div class="input-field col s6">
+            <input id="password" type="password" class="validate" name="password">
+            <label for="password">Password</label>
+        </div>
+        <div class="input-field col s6">
+            <input id="verifyPassword" type="password" class="validate" name="verifyPassword">
+            <label for="verifyPassword">Verify Password</label>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="input-field col s12">
+            <input id="email" type="email" class="validate" name="email">
+            <label for="email">Email</label>
+        </div>
+        </div>
+
+        <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Sign me up!
+            <i class="material-icons right">mode_edit</i>
+        </button>
+    </form>
+</div>
