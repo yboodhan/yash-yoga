@@ -6,3 +6,9 @@ html, body {
 main {
     text-align: center;
 }
+
+#toast-container {
+    left: 40% !important;
+    right: auto !important;
+    bottom: auto !important;
+  }

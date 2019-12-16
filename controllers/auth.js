@@ -11,11 +11,17 @@ router.post('/login', (req,res) => {
 })
 
 router.get('/signup', (req,res) => {
-    res.render('auth/signup')
+    res.render('auth/signup', { data: {} })
 })
 
 router.post('/signup', (req,res) => {
-    res.send(req.body)
+    //check whether password was correct
+    if (req.body.password != req.body.password_verify) {
+        req.flash('error', 'Passwords do not match!')
+        res.render('auth/signup', { data:req.body, alerts: req.flash() })
+    } else {
+        res.send(req.body)
+    }
 })
 
 router.get('/logout', (req,res) => {
