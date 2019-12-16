@@ -4,44 +4,54 @@
     <form method="POST" action="/auth/signup" class="col s12">
         <div class="row">
         <div class="input-field col s6">
-            <input id="firstName" type="email" class="validate" name="firstName">
+            <input id="firstName" type="text" class="validate" name="firstname">
             <label for="firstName">First Name</label>
         </div>
         <div class="input-field col s6">
-            <input id="lastName" type="text" class="validate" name="lastName">
+            <input id="lastName" type="text" class="validate" name="lastname">
             <label for="lastName">Last Name</label>
         </div>
         </div>
 
         <div class="row">
-        <div class="input-field col s12">
-            <input id="profile" type="url" class="validate" name="profilePic">
-            <label for="profile">Profile Picture URL</label>
+        <div class="input-field col s4">
+            <input id="email" type="email" class="validate" name="email">
+            <label for="email">Email</label>
+        </div>
+        
+        <div class="input-field col s4">
+            <input id="userName" type="text" class="validate" name="username">
+            <label for="userName">Username</label>
+        </div>
+
+        <div class="input-field col s4">
+            <input id="birthDate" type="text" class="datepicker validate" name="birthdate">
+            <label for="birthDate">Birth date</label>
         </div>
         </div>
 
-        <div class="row">
-        <div class="input-field col s12">
-            <input id="userName" type="email" class="validate" name="userName">
-            <label for="userName">Username</label>
-        </div>
-        </div>
-        
         <div class="row">
         <div class="input-field col s6">
             <input id="password" type="password" class="validate" name="password">
             <label for="password">Password</label>
         </div>
         <div class="input-field col s6">
-            <input id="verifyPassword" type="password" class="validate" name="verifyPassword">
+            <input id="verifyPassword" type="password" class="validate" name="password_verify">
             <label for="verifyPassword">Verify Password</label>
         </div>
         </div>
 
         <div class="row">
         <div class="input-field col s12">
-            <input id="email" type="email" class="validate" name="email">
-            <label for="email">Email</label>
+            <input id="profile" type="url" class="validate" name="photoUrl">
+            <label for="profile">Profile Picture URL</label>
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="input-field col s12">
+            <textarea id="bio" class="materialize-textarea validate" name="bio"></textarea>
+            <label for="bio">User Bio</label>
         </div>
         </div>
 
@@ -50,3 +60,17 @@
         </button>
     </form>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker')
+    let startDate = new Date()
+    startDate.setFullYear(startDate.getFullYear() - 30)
+    var instances = M.Datepicker.init(elems, {
+        autoClose: true,
+        defaultDate: startDate,
+        minYear: startDate.getFullYear() - 70,
+        maxYear: (new Date()).getFullYear()
+    })
+  })
+</script>
