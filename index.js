@@ -21,7 +21,7 @@ app.use(session({
 app.use(flash()) //order matters, must come after using session!
 //custom middleware: add variables to locals for each page
 app.use((req, res, next) => {
-    res.locals.alerts = req.flash
+    res.locals.alerts = req.flash()
     next()
 })
 
@@ -35,7 +35,7 @@ app.get('/', (req,res) => {
 
 // Always the bottom route, to deal with error
 app.get('*', (req,res) => {
-    res.render('error404')
+    res.render('error')
 })
 
 app.listen(process.env.PORT || 3000, () => { //for deployment purposes
