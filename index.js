@@ -14,7 +14,9 @@ app.use(layouts)
 app.use('/', express.static('static'))
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
-    secret: process.env.SESSION_SECRET
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
 }))
 app.use(flash()) //order matters, must come after using session!
 //custom middleware: add variables to locals for each page
