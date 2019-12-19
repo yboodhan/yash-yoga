@@ -8,6 +8,9 @@ let session = require('express-session')
 // Declare express app variable
 let app = express()
 
+// Include passport configuration
+let passport = require('./config/passportConfig')
+
 // Set up and middleware
 app.set('view engine', 'ejs')
 app.use(layouts)
@@ -19,14 +22,19 @@ app.use(session({
     saveUninitialized: true
 }))
 app.use(flash()) //order matters, must come after using session!
+app.use(passport.initialize()) //must come after session
+app.use(passport.session()) //must come after session
+
 //custom middleware: add variables to locals for each page
 app.use((req, res, next) => {
     res.locals.alerts = req.flash()
+    res.locals.user = req.user
     next()
 })
 
 // Add any controllers we have
 app.use('/auth', require('./controllers/auth'))
+app.use('/profile', require('./controllers/profile'))
 
 // Add home or catch-all routes
 app.get('/', (req,res) => {

@@ -4,20 +4,27 @@ let router = require('express').Router()
 //Include a reference for models folder
 let db = require('../models')
 
+//Reference to the passport module
+let passport = require('../config/passportConfig')
+
 // Define routes
 router.get('/login', (req,res) => {
     res.render('auth/login')
 })
 
-router.post('/login', (req,res) => {
-    res.send(req.body)
-})
+//authenticate user
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/profile',
+    successFlash: 'Yay, we logged in!',
+    failureRedirect: '/auth/login',
+    failureFlash: 'Invalid Credentials 😭'
+}))
 
 router.get('/signup', (req,res) => {
     res.render('auth/signup', { data: {} })
 })
 
-router.post('/signup', (req,res) => {
+router.post('/signup', (req,res, next) => {
     //check whether password was correct
     if (req.body.password != req.body.password_verify) {
         // user's password verification doesn't match
@@ -34,7 +41,12 @@ router.post('/signup', (req,res) => {
                 //this is the intended user action
                 //now automatically log in the user to their new account
                 //TODO: login the user
-                res.send('sucess Create user - go look at db')
+                passport.authenticate('local', {
+                    successRedirect: '/profile',
+                    successFlash: 'Yay, successful account creation!',
+                    failureRedirect: '/auth/login',
+                    failureFlash: 'This should never happen ?? 😭'
+                })(req, res, next)
             } else {
                 //the user already has an account (probably forgot)
                 req.flash('error', 'Account already exists for this email. Log in!')
@@ -64,7 +76,9 @@ router.post('/signup', (req,res) => {
 })
 
 router.get('/logout', (req,res) => {
-    res.send('GET /auth/logout')
+    req.logout() //throws away the session data of the loggin in user
+    req.flash('success', 'Goodbye -- see you next time! ✌🏽')
+    res.redirect('/')
 })
 
 // Export the router object so we can include it in the other files
