@@ -1,5 +1,10 @@
+//Read ENV variables
+require('dotenv').config()
+
 //Require passport and any passport strategies you wish to use
 let passport = require('passport')
+let FacebookStategy = require('passport-facebook').Strategy
+let GithubStrategy = require('passport-github2').Strategy
 let LocalStrategy = require('passport-local').Strategy //this is a class, not camelcase
 
 //Reference the models folder to access the db
@@ -46,6 +51,18 @@ passport.use(new LocalStrategy({
     })
     .catch(cb)
 }))
+
+//Implement Github strategy
+passport.use(new GithubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: process.env.BASE_URL + '/auth/callback/github'
+}, (accessToken, refreshToken, profile, cb) => {
+
+}))
+
+//Implement Facebook strategy
+
 
 //Make sure you can include this file in other files
 module.exports = passport
