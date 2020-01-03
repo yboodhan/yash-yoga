@@ -43,7 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     bio: DataTypes.TEXT,
-    admin: DataTypes.BOOLEAN
+    admin: DataTypes.BOOLEAN,
+    facebookId: DataTypes.STRING,
+    facebookToken: DataTypes.STRING,
+    githubId: DataTypes.STRING,
+    githubToken: DataTypes.STRING
   }, { //create hooks
     hooks: {
       beforeCreate: pendingUser => {
