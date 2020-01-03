@@ -58,7 +58,23 @@ passport.use(new GithubStrategy({
     clientSecret: process.env.GITHUB_SECRET,
     callbackURL: process.env.BASE_URL + '/auth/callback/github'
 }, (accessToken, refreshToken, profile, cb) => {
-
+    console.log('Github Login', profile)
+    let name = profile.displayName.split(' ')
+    db.user.findOrCreate({
+        where: { githubId: profile.id },
+        defaults: {
+            githubToken: accessToken,
+            firstname: name[0] || profile.username,
+            lastname: name[name.length-1] || '',
+            username: profile.username,
+            photoUrl: profile._json.avatar_url,
+            bio: profile._json.bio || `Github user ${profile.username} works at ${profile._json.company} in ${profile._json.location}`
+        }
+    })
+    .then(([user, wasCreated]) => {
+        return cb(null, user)
+    })
+    .catch(cb)
 }))
 
 //Implement Facebook strategy
