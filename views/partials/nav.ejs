@@ -11,6 +11,9 @@
           <% if (user.admin) { %>
             <li><a href="/profile/admin">Admin</a></li>
           <% } %>
+          <% if (user.githubId) { %>
+            <li><a href="/profile/repos">View Repos</a></li>
+          <% } %>
           <li><a href="/profile">Profile</a></li>
           <li><a href="/auth/logout">Logout</a></li>
         <% } %>
