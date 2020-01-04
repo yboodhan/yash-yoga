@@ -30,6 +30,16 @@ This is the boilerplate code for projects. This is a skeleton node/express app w
 
 ### Default Routes
 
-
+| Method | Path | Location | Purpose |
+| ------ | ---------------- | -------------- | ------------------- |
+| GET | / | index.js | Home page |
+| GET | * | index.js | Render error/404 page |
+| GET | /auth/login | auth.js | Login form |
+| GET | /auth/signup | auth.js | Signup form |
+| POST | /auth/login | auth.js | Login user |
+| POST | /auth/signup | auth.js | Creates User |
+| GET | /auth/logout | auth.js | Removes session info |
+| GET | /profile | profile.js | Regular User Profile |
+| GET | /profile/admin | profile.js | Admin User Profile |
 
 ## Steps To Use
