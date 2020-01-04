@@ -76,3 +76,44 @@ createdb <new_db_name>
 * Change the database name
 * Check dialect is what you are using
 
+#### 6. Modify/add models for relevancy in your projects
+
+* Check required fields are needed in your project
+* Add fields you may require
+* Adjust migration accordingly
+
+#### 7. Run the migration
+
+```
+sequelize db:migrate
+
+```
+#### 8. Add a `.env` file with the keys you need to run your app (API keys, secret keys, etc.)
+
+* SESSION_SECRET can be any random string, usually hashed for production
+
+> Note: If you need OAuth for Facebook for Github, switch to the directions on `with-oauth` brach.
+
+#### 9. Run server to make sure it works
+
+```
+nodemon
+```
+
+or 
+
+```
+node index.js
+```
+
+#### 10. Create a new github repository for your project
+
+* Create a new repository on your personal Github account (via GUI)
+* Delete the old remote to origin (`git remote remove origin`)
+* Add a new repository link as a remote location you can push to (`git remote add origin <new_link>`)
+* Add, commit, and push:
+    * `git add -A`
+    * `git commit -m 'first commit'`
+    * `git push origin master`
+
+> Note: Do not make commits from new project to your auth boilerplate. Keep it the same so that you can reuse it for other projects.
