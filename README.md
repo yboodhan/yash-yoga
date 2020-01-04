@@ -1,6 +1,6 @@
 # express-auth
 
-This is the boilerplate code for projects. This is a skeleton node/express app with basic local user authentication. It exists so that *I don't have to start from scratch on my projects*.
+This is the basic starting code for projects. It is a skeleton node/express app with basic local user authentication. It exists so that *I don't have to start from scratch on my projects*.
 
 ## What it includes:
 
@@ -43,3 +43,36 @@ This is the boilerplate code for projects. This is a skeleton node/express app w
 | GET | /profile/admin | profile.js | Admin User Profile |
 
 ## Steps To Use
+
+#### 1. Clone this repo and rename it to a new name you choose
+
+```
+git clone <repo_link> <your_new_name>
+```
+
+#### 2. Install all dependencies for this project
+
+```
+npm install
+```
+
+#### 3. Create your own project name for the project you want to use this with
+
+But first! Remove defaults that won't apply to you:
+
+* Title in `layout.ejs`
+* Logo in NavBar
+* Description/Repo Link in `package.json`
+* Remove readme information and make relevant to new project
+
+#### 4. Create a new local database for the project you are working on
+
+```
+createdb <new_db_name>
+```
+
+#### 5. Update your `config.json` file to your database and with your dialect
+
+* Change the database name
+* Check dialect is what you are using
+
