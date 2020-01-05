@@ -14,24 +14,28 @@
             <label for="password">Password</label>
         </div>
         </div>
-        <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Submit
-            <i class="material-icons right">send</i>
+        <button class="submit" type="submit" name="action">Submit
+            <i class="fa fa-paper-plane-o"></i>
         </button>
     </form>
 </div>
 
 <hr>
 
-<h2>Or....</h2>
-
-<a href="/auth/github" class="btn waves-effect waves-light blue lighten-2">
-    Github Login
-    <i class="fa fa-github" aria-hidden="true"></i>
-  </a>
-
-  <a href="/auth/facebook" class="btn waves-effect waves-light blue lighten-2">
-    Facebook Login
-    <i class="fa fa-facebook" aria-hidden="true"></i>
-  </a>
-
-<!-- fa is font awesome -->
+<div class="box">
+    <h1>Or login through:</h1>
+    
+    <button>
+        <a href="/auth/github">
+            Github Login
+            <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+    </button>
+    
+    <button>
+        <a href="/auth/facebook">
+            Facebook Login
+            <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+    </button>
+</div>
