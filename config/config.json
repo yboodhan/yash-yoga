@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "auth-sei28",
+    "database": "yash-yoga",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "operatorsAliases": false

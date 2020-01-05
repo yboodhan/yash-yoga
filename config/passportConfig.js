@@ -60,12 +60,17 @@ passport.use(new GithubStrategy({
 }, (accessToken, refreshToken, profile, cb) => {
     console.log('Github Login', profile)
     let name = profile.displayName ? profile.displayName.split(' ') : profile.username
+    let githubEmail = profile.emails[0].value
     db.user.findOrCreate({
-        where: { githubId: profile.id },
+        where: {
+            email: githubEmail
+        },
         defaults: {
             githubToken: accessToken,
+            githubId: profile.id,
             firstname: name[0] || profile.username,
             lastname: name[name.length-1] || '',
+            email: githubEmail,
             username: profile.username,
             photoUrl: profile._json.avatar_url,
             bio: profile._json.bio || `Github user ${profile.username} works at ${profile._json.company} in ${profile._json.location}`
@@ -93,7 +98,7 @@ passport.use(new FacebookStategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: process.env.BASE_URL + '/auth/callback/facebook',
-    profileFields: ['id', 'displayName', 'photos', 'birthday']
+    profileFields: ['id', 'displayName', 'photos', 'email']
 }, (accessToken, refreshToken, profile, cb) => {
     console.log('Facebook Login', profile)
     //Grab the facebook primary email
@@ -109,9 +114,9 @@ passport.use(new FacebookStategy({
             facebookId: profile.id,
             firstname: displayName[0],
             lastname: displayName[displayName.length-1],
-            username: profile.username || displayName,
+            email: facebookEmail,
+            username: profile.username || profile.displayName,
             photoUrl: photo,
-            birthdate: profile._json.birthday,
             bio: 'This is a new account, created through facebook.'
         }
     })

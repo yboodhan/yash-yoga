@@ -15,14 +15,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       username: {
         type: Sequelize.STRING
-      },
-      birthdate: {
-        type: Sequelize.DATE
       },
       password: {
         type: Sequelize.STRING
@@ -36,6 +32,18 @@ module.exports = {
       admin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
+      },
+      facebookId: {
+        type: Sequelize.STRING
+      },
+      facebookToken: {
+        type: Sequelize.STRING
+      },
+      githubId: {
+        type: Sequelize.STRING
+      },
+      githubToken: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

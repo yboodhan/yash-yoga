@@ -96,7 +96,7 @@ router.get('/callback/github', passport.authenticate('github', {
 //FACEBOOK LOGIN ROUTES
 //The route our app calls
 router.get('/facebook', passport.authenticate('facebook', {
-    scope: ['public_profile', 'email', 'user_birthday']
+    scope: ['public_profile', 'email']
 }))
 
 //The route facebook calls back to
