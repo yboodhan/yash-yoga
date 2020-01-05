@@ -60,10 +60,11 @@ passport.use(new GithubStrategy({
 }, (accessToken, refreshToken, profile, cb) => {
     console.log('Github Login', profile)
     let name = profile.displayName ? profile.displayName.split(' ') : profile.username
-    let githubEmail = profile.emails[0].value
+    let githubEmail = profile.emails ? profile.emails[0].value : null
     db.user.findOrCreate({
         where: {
-            email: githubEmail
+            email: githubEmail,
+            githubId: profile.id
         },
         defaults: {
             githubToken: accessToken,
@@ -73,7 +74,7 @@ passport.use(new GithubStrategy({
             email: githubEmail,
             username: profile.username,
             photoUrl: profile._json.avatar_url,
-            bio: profile._json.bio || `Github user ${profile.username} works at ${profile._json.company} in ${profile._json.location}`
+            bio: profile._json.bio || 'This is a new account, created through Github. No bio yet.'
         }
     })
     .then(([user, wasCreated]) => {
@@ -102,13 +103,16 @@ passport.use(new FacebookStategy({
 }, (accessToken, refreshToken, profile, cb) => {
     console.log('Facebook Login', profile)
     //Grab the facebook primary email
-    let facebookEmail = profile.emails[0].value
+    let facebookEmail = profile.emails ? profile.emails[0].value : null
     let displayName = profile.displayName.split(' ')
     let photo = profile.photos.length ? profile.photos[0].value : 'https://res.cloudinary.com/briezh/image/upload/v1555956782/tg57atqguantflp2q2e5.jpg'
 
     //Look for the email in the local database -- DO NOT DUPLICATE
     db.user.findOrCreate({
-        where: { email: facebookEmail },
+        where: { 
+            email: facebookEmail,
+            facebookId: profile.id
+        },
         defaults: {
             facebookToken: accessToken,
             facebookId: profile.id,
@@ -117,7 +121,7 @@ passport.use(new FacebookStategy({
             email: facebookEmail,
             username: profile.username || profile.displayName,
             photoUrl: photo,
-            bio: 'This is a new account, created through facebook.'
+            bio: 'This is a new account, created through facebook. No bio yet.'
         }
     })
     .then(([user, wasCreated]) => {
