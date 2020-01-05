@@ -1,21 +1,24 @@
 <div id="toast-container"></div>
 <script>
+
 let errors = '<%- alerts.error %>'
 let successes = '<%- alerts.success %>'
+
   document.addEventListener('DOMContentLoaded', function() {
     if (errors) {
         M.toast({
           html: errors,
-          classes: 'red lighten-2',
-          displayLength: 2000
+          classes: 'toast red darken-4',
+          displayLength: 4000
         })
     }
     if (successes) {
       M.toast({
           html: successes,
-          classes: 'green lighten-2',
-          displayLength: 2000
+          classes: 'toast light-green accent-4',
+          displayLength: 4000
         })
     }
   })
+
 </script>
