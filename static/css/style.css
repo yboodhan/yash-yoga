@@ -5,6 +5,7 @@ html, body {
 
 main {
     text-align: center;
+    font-family: 'Amatic SC', cursive;
 }
 
 #toast-container {
@@ -23,4 +24,29 @@ main {
 
 .dropdown-toggle {
     margin-right: 1em !important;
+}
+
+.tabs, .tabs a {
+    font-family: 'Amatic SC', cursive;
+    font-size: 1.3em !important;
+}
+
+.dropdown-toggle {
+    font-size: 1.5em !important
+}
+
+.nav-content {
+    margin-top: 1em;
+}
+
+.brand-logo {
+    text-decoration: none !important;
+    margin-top: 0.2em;
+    font-family: 'Amatic SC', cursive;
+    font-size: 3em !important;
+}
+
+.brand-logo:hover {
+    color: white;
+    font-weight: bold;
 }
