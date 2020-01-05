@@ -1,5 +1,10 @@
+//Read ENV variables
+require('dotenv').config()
+
 //Require passport and any passport strategies you wish to use
 let passport = require('passport')
+let FacebookStategy = require('passport-facebook').Strategy
+let GithubStrategy = require('passport-github2').Strategy
 let LocalStrategy = require('passport-local').Strategy //this is a class, not camelcase
 
 //Reference the models folder to access the db
@@ -42,6 +47,89 @@ passport.use(new LocalStrategy({
         } else {
             //valid user and a valid password
             cb(null, foundUser)
+        }
+    })
+    .catch(cb)
+}))
+
+//Implement Github strategy
+passport.use(new GithubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: process.env.BASE_URL + '/auth/callback/github'
+}, (accessToken, refreshToken, profile, cb) => {
+    console.log('Github Login', profile)
+    let name = profile.displayName ? profile.displayName.split(' ') : profile.username
+    db.user.findOrCreate({
+        where: { githubId: profile.id },
+        defaults: {
+            githubToken: accessToken,
+            firstname: name[0] || profile.username,
+            lastname: name[name.length-1] || '',
+            username: profile.username,
+            photoUrl: profile._json.avatar_url,
+            bio: profile._json.bio || `Github user ${profile.username} works at ${profile._json.company} in ${profile._json.location}`
+        }
+    })
+    .then(([user, wasCreated]) => {
+        //find out if user was already github user and if so, need new token
+        if (!wasCreated && user.githubId) {
+            user.update({
+                githubToken: accessToken
+            })
+            .then( updatedUser => {
+                cb(null, updatedUser)
+            })
+            .catch(cb)
+        } else {
+            return cb(null, user)
+        }
+    })
+    .catch(cb)
+}))
+
+//Implement Facebook strategy
+passport.use(new FacebookStategy({
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
+    callbackURL: process.env.BASE_URL + '/auth/callback/facebook',
+    profileFields: ['id', 'displayName', 'photos', 'birthday']
+}, (accessToken, refreshToken, profile, cb) => {
+    console.log('Facebook Login', profile)
+    //Grab the facebook primary email
+    let facebookEmail = profile.emails[0].value
+    let displayName = profile.displayName.split(' ')
+    let photo = profile.photos.length ? profile.photos[0].value : 'https://res.cloudinary.com/briezh/image/upload/v1555956782/tg57atqguantflp2q2e5.jpg'
+
+    //Look for the email in the local database -- DO NOT DUPLICATE
+    db.user.findOrCreate({
+        where: { email: facebookEmail },
+        defaults: {
+            facebookToken: accessToken,
+            facebookId: profile.id,
+            firstname: displayName[0],
+            lastname: displayName[displayName.length-1],
+            username: profile.username || displayName,
+            photoUrl: photo,
+            birthdate: profile._json.birthday,
+            bio: 'This is a new account, created through facebook.'
+        }
+    })
+    .then(([user, wasCreated]) => {
+        //Did we create a new user?
+        if (wasCreated || user.facebookId) {
+            //New user, not found in local database
+            cb(null, user)
+        } else {
+            //We found an existing user
+            user.update({
+                facebookId: profile.id,
+                facebookToken: accessToken
+            })
+            .then(updatedUser => {
+                cb(null, updatedUser)
+            })
+            .catch(cb)
         }
     })
     .catch(cb)

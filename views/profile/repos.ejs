@@ -1,0 +1,28 @@
+<h1><%= user.firstname %>'s Repos</h1>
+
+<% if (repos) { %>
+  <h2>Page <%= page %></h2>
+  <table class="table striped">
+    <thead>
+      <th>Repo Name</th>
+      <th>Language</th>
+      <th>Created On</th>
+      <th>Last Update</th>
+    </thead>
+    <tbody>
+      <% repos.forEach(r => { %>
+        <tr>
+          <td><%= r.name %></td>
+          <td><%= r.language %></td>
+          <td><%= r.created_at %></td>
+          <td><%= r.updated_at %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <a href="/profile/repos?page=<%=page - 1%>">&larr; Prev Page</a>
+  <a href="/profile/repos?page=<%=page + 1%>">Next Page &rarr;</a>
+<% } else { %>
+  <h2>Uh-Oh!</h2>
+  <p>Nothing to display!</p>
+<% } %>
