@@ -4,6 +4,7 @@ let express = require('express')
 let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
 let session = require('express-session')
+let rowdy = require('rowdy-logger')
 
 // Declare express app variable
 let app = express()
@@ -12,6 +13,7 @@ let app = express()
 let passport = require('./config/passportConfig')
 
 // Set up and middleware
+let rowdyResults = rowdy.begin(app)
 app.set('view engine', 'ejs')
 app.use(layouts)
 app.use('/', express.static('static'))
@@ -48,4 +50,5 @@ app.get('*', (req,res) => {
 
 app.listen(process.env.PORT || 3000, () => { //for deployment purposes
     console.log('You are connected! ☕️🎧')
+    rowdyResults.print()
 })
