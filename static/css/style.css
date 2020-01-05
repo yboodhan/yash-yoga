@@ -81,3 +81,12 @@ input, label {
     font-size: 1.5em !important;
     font-weight: bold;
 }
+
+.toast {
+    font-family: 'Amatic SC', cursive;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, 0px);
+    z-index: 2;
+    font-size: 1.5em;
+}

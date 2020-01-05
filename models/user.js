@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: {
           args: [1, 255],
-          msg: 'I really wanna know your name! Put something! 😤'
+          msg: ' First Name'
         }
       }
     },
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isEmail: {
-          msg: 'Hey, please give a valid email address! 🤪'
+          msg: ' Email'
         }
       }
     },
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: {
           args: [6, 25], //min and max args
-          msg: 'Your password must be between 6 and 25 characters! 😖'
+          msg: ' Password (6 - 25 characters)'
         }
       }
     },
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isUrl: {
-          msg: 'Aww, no picture at that URL. 😥'
+          msg: ' Photo'
         }
       }
     },

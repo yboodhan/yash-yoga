@@ -15,9 +15,9 @@ router.get('/login', (req,res) => {
 //authenticate user
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/profile',
-    successFlash: 'Yay, we logged in!',
+    successFlash: 'Namaste devotee!',
     failureRedirect: '/auth/login',
-    failureFlash: 'Invalid Credentials 😭'
+    failureFlash: 'Invalid Credentials.'
 }))
 
 router.get('/signup', (req,res) => {
@@ -43,9 +43,9 @@ router.post('/signup', (req,res, next) => {
                 //TODO: login the user
                 passport.authenticate('local', {
                     successRedirect: '/profile',
-                    successFlash: 'Yay, successful account creation!',
+                    successFlash: 'Your account was successfully created.',
                     failureRedirect: '/auth/login',
-                    failureFlash: 'This should never happen ?? 😭'
+                    failureFlash: 'There is an error in authentication. Try again.'
                 })(req, res, next)
             } else {
                 //the user already has an account (probably forgot)
@@ -77,7 +77,7 @@ router.post('/signup', (req,res, next) => {
 
 router.get('/logout', (req,res) => {
     req.logout() //throws away the session data of the loggin in user
-    req.flash('success', 'Goodbye -- see you next time! ✌🏽')
+    req.flash('success', 'You have successfully logged out.')
     res.redirect('/')
 })
 
@@ -88,9 +88,9 @@ router.get('/github', passport.authenticate('github'))
 //This is the route that github uses
 router.get('/callback/github', passport.authenticate('github', {
     successRedirect: '/profile',
-    successFlash: 'Github login success',
+    successFlash: 'You have successfully logged in using Github.',
     failureRedirect: '/auth/login',
-    failureFlash: 'Github does not like it'
+    failureFlash: 'Github login has failed.'
 }))
 
 //FACEBOOK LOGIN ROUTES
@@ -102,9 +102,9 @@ router.get('/facebook', passport.authenticate('facebook', {
 //The route facebook calls back to
 router.get('/callback/facebook', passport.authenticate('facebook', {
     successRedirect: '/profile',
-    successFlash: 'Facebook login success',
+    successFlash: 'You have successfully logged in using Facebook.',
     failureRedirect: '/auth/login',
-    failureFlash: 'Facebook does not like it'
+    failureFlash: 'Facebook login has failed.'
 }))
 
 // Export the router object so we can include it in the other files

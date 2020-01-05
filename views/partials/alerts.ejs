@@ -1,13 +1,15 @@
 <div id="toast-container"></div>
 <script>
 
+let errmsg = 'Something is wrong with: '
+
 let errors = '<%- alerts.error %>'
 let successes = '<%- alerts.success %>'
 
   document.addEventListener('DOMContentLoaded', function() {
     if (errors) {
         M.toast({
-          html: errors,
+          html: errmsg.concat(errors),
           classes: 'toast red darken-4',
           displayLength: 4000
         })
@@ -15,7 +17,7 @@ let successes = '<%- alerts.success %>'
     if (successes) {
       M.toast({
           html: successes,
-          classes: 'toast light-green accent-4',
+          classes: 'toast teal accent-4',
           displayLength: 4000
         })
     }

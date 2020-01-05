@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
         next()
     } else {
         //no one is logged in; redirect away from protected page
-        req.flash('error', 'You must be logged in to view this page')
+        req.flash('error', 'You must be logged in to view this page.')
         res.redirect('/auth/login')
     }
 }
