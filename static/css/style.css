@@ -20,3 +20,7 @@ main {
 .dropdown-item {
     max-height: 2em;
 }
+
+.dropdown-toggle {
+    margin-right: 1em !important;
+}
