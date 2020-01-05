@@ -1,11 +1,15 @@
 html, body {
     margin: 0;
     padding: 0;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 main {
     text-align: center;
     font-family: 'Amatic SC', cursive;
+    flex: 1 0 auto;
 }
 
 #toast-container {
@@ -26,7 +30,7 @@ main {
     margin-right: 1em !important;
 }
 
-.tabs, .tabs a {
+.tabs, .tabs a, footer {
     font-family: 'Amatic SC', cursive;
     font-size: 1.3em !important;
 }
