@@ -6,9 +6,10 @@
   <div class="nav-content">
     <ul class="tabs tabs-transparent">
       <li class="tab"><a href="/"><i class="fa fa-home small"></i> Home</a></li>
-      <li class="tab"><a href="/">About</a></li>
+      <% if (!user) { %>
       <li class="tab"><a href="/auth/signup">Sign-Up</a></li>
       <li class="tab"><a href="/auth/login">Login</a></li>
+      <% } else { %>
       <li class="tab"><a href="/"><i class="fa fa-folder"></i> My Routines</a></li>
       <li class="tab"><a href="/"><i class="fa fa-book"></i> My Journal</a></li>
       <li class="tab"><a href="/"><i class="fa fa-newspaper-o"></i> Articles</a></li>
@@ -16,22 +17,26 @@
 
       <div class="dropdown-show">
         <li class="tab dropdown-toggle float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Profile <i class="fa fa-user-circle small"></i>
+          <%= user.firstname %> <i class="fa fa-user-circle small"></i>
         </li>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="/profile"><i class="fa fa-info-circle"></i> About Me</a>
           <a class="dropdown-item" href="#"><i class="fa fa-bar-chart"></i> User Stats</a>
+          <% if (user.admin) { %>
+            <a class="dropdown-item" href="/profile/admin"><i class="fa fa-key"></i> Admin</a>
+          <% } %>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/auth/logout">Logout</a>
         </div>
       </div>
+      <% } %>
     </ul>
   </div>
 </nav>
 
 
 
-<nav class="blue lighten-3">
+<!-- <nav class="blue lighten-3">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo"><i class="material-icons">pets</i>myWebsite</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -52,4 +57,4 @@
         <% } %>
       </ul>
     </div>
-  </nav>
+  </nav> -->

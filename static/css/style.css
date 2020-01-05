@@ -12,3 +12,11 @@ main {
     right: auto !important;
     bottom: auto !important;
   }
+
+.tabs {
+    overflow: visible !important;
+}
+
+.dropdown-item {
+    max-height: 2em;
+}
