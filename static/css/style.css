@@ -69,12 +69,15 @@ button a, button, .submit {
     font-size: 1.5em;
 }
 
-.box {
-    border: 0.05em solid rgba(190, 188, 188, 0.52);
-    border-radius: 10%;
+.box, .quote {
     display: inline-block;
     padding: 1.5em;
     margin-bottom: 1em;
+}
+
+.box {
+    border: 0.05em solid rgba(190, 188, 188, 0.52);
+    border-radius: 10%;
 }
 
 input, label {

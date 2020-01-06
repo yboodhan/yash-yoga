@@ -37,6 +37,7 @@ app.use((req, res, next) => {
 // Add any controllers we have
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
+app.use('/inspiration', require('./controllers/inspiration'))
 
 // Add home or catch-all routes
 app.get('/', (req,res) => {
