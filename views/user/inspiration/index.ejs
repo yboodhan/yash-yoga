@@ -13,29 +13,32 @@
 <br>
 
 <div class="row">
-    <div class="col s4 l4 m4">
+    <div class="col-3">
         <h4><strong>Other Devotees:</strong></h4>
         <hr>
-        <div class="user-panel">
+        <div class="scroll-panel">
             <% users.forEach ( user => { %> 
                 <div class="user-cards">
-                    <h5><strong><%= user.username %></strong></h5>
-                    <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
-                    <p class="text-truncate"><%= user.bio %></p>
+                    <img alt="user picture" src="<%= user.photoUrl %>" height="70" class="float-left user-photo">
+                    <div class="left-align">
+                        <h5><strong><%= user.username %></strong></h5>
+                        <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
+                        <p class="text-truncate"><%= user.bio %></p>
+                    </div>
                     <button>Add as friend.</button>
                 </div>
             <% }) %>
         </div>
     </div>
 
-    <div class="col s4 l4 m4">
+    <div class="col-3">
         <h4><strong>New Routines:</strong></h4>
         <hr>
         <div>
             New Routines
         </div>
     </div>
-    <div class="col s4 l4 m4">
+    <div class="col-6">
         <h4><strong>Chat:</strong></h4>
         <hr>
         <div>

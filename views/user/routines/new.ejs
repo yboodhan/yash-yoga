@@ -1,0 +1,78 @@
+<h1>Create a new routine:</h1>
+
+<br>
+
+<div class="row">
+    <div class="col-8">
+        <h4><strong>Yoga Poses:</strong></h4>
+        <hr>
+        <div class="scroll-panel">
+            <% poses.forEach( pose => { %>
+                <div class="user-cards">
+                    <img alt="yoga pose" src="<%= pose.img_url %>" height="50" class="float-left yoga-pose">
+                    <h4 class="left-align"><%= pose.sanskrit_name %></h4>
+                    <h5 class="left-align"><%= pose.english_name %></h5>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="row">
+            <div class="col scroll-box">
+                <h4><strong>Yoga Poses:</strong></h4>
+                <hr>
+                <div class="scroll-panel">
+                    <% poses.forEach( pose => { %>
+                        <div class="user-cards">
+                            <p class="float-left"><%= pose.id %></p>
+                            <img alt="yoga pose" src="<%= pose.img_url %>" height="50" class="float-left yoga-pose">
+                            <h4 class="left-align"><%= pose.sanskrit_name %></h4>
+                            <h5 class="left-align"><%= pose.english_name %></h5>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col scroll-box">
+                <h4><strong>Music:</strong></h4>
+                <hr>
+                <div>
+                        <div class="user-cards">
+                            <p class="float-left">1</p>
+                            <button id="music1"><i class="fa fa-play-circle medium"></i></button>
+                            <h4 class="left-align">Better Days</h4>
+                            <h5 class="left-align">Provided by Bensound.</h5>
+                        </div>
+                        <div class="user-cards">
+                            <p class="float-left">2</p>
+                            <button id="music2"><i class="fa fa-play-circle medium"></i></button>
+                            <h4 class="left-align">India</h4>
+                            <h5 class="left-align">Provided by Bensound.</h5>
+                        </div>
+                        <div class="user-cards">
+                            <p class="float-left">3</p>
+                            <button id="music3"><i class="fa fa-play-circle medium"></i></button>
+                            <h4 class="left-align">Relaxing</h4>
+                            <h5 class="left-align">Provided by Bensound.</h5>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    document.getElementById('music1').addEventListener( 'click', () => {
+    console.log('CLICKED!')
+    })
+    
+})
+
+</script>

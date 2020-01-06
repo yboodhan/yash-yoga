@@ -6,4 +6,8 @@ router.get('/', isLoggedIn, (req, res) => {
     res.render('user/routines/index')
 })
 
+router.get('/new', isLoggedIn, (req, res) => {
+    res.render('user/routines/new', { poses: poses })
+})
+
 module.exports = router
