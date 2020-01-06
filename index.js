@@ -5,6 +5,7 @@ let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
 let session = require('express-session')
 let rowdy = require('rowdy-logger')
+let moment = require('moment')
 
 // Declare express app variable
 let app = express()
@@ -31,6 +32,7 @@ app.use(passport.session()) //must come after session
 app.use((req, res, next) => {
     res.locals.alerts = req.flash()
     res.locals.user = req.user
+    res.locals.moment = moment
     next()
 })
 

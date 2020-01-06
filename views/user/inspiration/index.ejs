@@ -1,5 +1,42 @@
 <div class="quote">
-    <h1>Daily Quote</h1>
+    <h1>Daily Dose Of Inspiration:</h1>
     <h3>"<%= quote.quoteText %>"</h3>
-    <h4 class="float-right">- <%= quote.quoteAuthor %></h4>
+    <% if (quote.quoteAuthor) { %>
+        <h4 class="float-right">- <%= quote.quoteAuthor %></h4>
+    <% } else { %>
+    <h4 class="float-right">- Anonymous</h4>
+    <% } %>
+    <br>
+    <hr>
+
+    <div class="row">
+        
+        <div class="col s3">
+            <h4><strong>Other Devotees:</strong></h4>
+            <div class="user-panel">
+                <% users.forEach ( user => { %> 
+                    <div class="user-cards">
+                        <h5><strong><%= user.username %></strong></h5>
+                        <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
+                        <p class="text-truncate"><%= user.bio %></p>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+
+        <div class="col s5">
+            <% users.forEach ( user => { %> 
+                <div class="box">
+                    <%= user.firstname %> <%= user.lastname %>
+                </div>
+            <% }) %>
+        </div>
+        <div class="col s5">
+            <% users.forEach ( user => { %> 
+                <div class="box">
+                    <%= user.firstname %> <%= user.lastname %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
 </div>

@@ -69,15 +69,17 @@ button a, button, .submit {
     font-size: 1.5em;
 }
 
-.box, .quote {
+.box {
+    border: 0.05em solid rgba(190, 188, 188, 0.52);
+    border-radius: 10%;
     display: inline-block;
     padding: 1.5em;
     margin-bottom: 1em;
 }
 
-.box {
-    border: 0.05em solid rgba(190, 188, 188, 0.52);
-    border-radius: 10%;
+.quote {
+    display: inline-block;
+    margin-bottom: 0.5em;
 }
 
 input, label {
@@ -97,4 +99,16 @@ input, label {
 .profile {
     min-height: 20em;
     max-height: 20em;
+}
+
+.user-cards {
+    border: 0.05em solid rgba(190, 188, 188, 0.52);
+    border-radius: 5%;
+    padding: 0.5em 2em 0.5em 2em;
+    margin-bottom: 0.5em;
+}
+
+.user-panel {
+    max-height: 100vh;
+    overflow: scroll;
 }

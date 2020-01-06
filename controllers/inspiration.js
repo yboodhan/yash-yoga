@@ -6,7 +6,11 @@ let isLoggedIn = require('../middleware/isLoggedIn')
 router.get('/', isLoggedIn, (req, res) => {
     axios.get('https://quote-garden.herokuapp.com/quotes/random')
     .then( response => {
-        res.render('user/inspiration/index', { quote: response.data })
+        db.user.findAll()
+        .then( users => {
+            console.log(users)
+            res.render('user/inspiration/index', { quote: response.data, users })
+        })
     })
     .catch(err => {
         console.log(err)
