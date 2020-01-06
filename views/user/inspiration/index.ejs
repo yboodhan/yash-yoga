@@ -1,44 +1,45 @@
 <div class="quote">
     <h1>Daily Dose Of Inspiration:</h1>
-    <h3>"<%= quote.quoteText %>"</h3>
+    <h2>"<%= quote.quoteText %>"</h2>
     <% if (quote.authorAuthor) { %>
         <h4 class="float-right">- <%= quote.authorAuthor %></h4>
     <% } else { %>
     <h4 class="float-right">- Anonymous</h4>
-    <% } %>
     <br>
-    <hr>
+    <% } %>
+</div>
 
-    <div class="row">
-        
-        <div class="col s3">
-            <h4><strong>Other Devotees:</strong></h4>
-            <hr>
-            <div class="user-panel">
-                <% users.forEach ( user => { %> 
-                    <div class="user-cards">
-                        <h5><strong><%= user.username %></strong></h5>
-                        <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
-                        <p class="text-truncate"><%= user.bio %></p>
-                        <button>Add as friend.</button>
-                    </div>
-                <% }) %>
-            </div>
-        </div>
+<br>
+<br>
 
-        <div class="col s5">
-            <h4><strong>New Routines:</strong></h4>
-            <hr>
-            <div>
-                New Routines
-            </div>
+<div class="row">
+    <div class="col s4 l4 m4">
+        <h4><strong>Other Devotees:</strong></h4>
+        <hr>
+        <div class="user-panel">
+            <% users.forEach ( user => { %> 
+                <div class="user-cards">
+                    <h5><strong><%= user.username %></strong></h5>
+                    <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
+                    <p class="text-truncate"><%= user.bio %></p>
+                    <button>Add as friend.</button>
+                </div>
+            <% }) %>
         </div>
-        <div class="col s5">
-            <h4><strong>Chat:</strong></h4>
-            <hr>
-            <div>
-                Chat here.
-            </div>
+    </div>
+
+    <div class="col s4 l4 m4">
+        <h4><strong>New Routines:</strong></h4>
+        <hr>
+        <div>
+            New Routines
+        </div>
+    </div>
+    <div class="col s4 l4 m4">
+        <h4><strong>Chat:</strong></h4>
+        <hr>
+        <div>
+            Chat here.
         </div>
     </div>
 </div>

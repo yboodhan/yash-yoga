@@ -40,6 +40,9 @@ app.use((req, res, next) => {
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
 app.use('/inspiration', require('./controllers/inspiration'))
+app.use('/routines', require('./controllers/routines'))
+app.use('/journal', require('./controllers/journal'))
+app.use('/articles', require('./controllers/articles'))
 
 // Add home or catch-all routes
 app.get('/', (req,res) => {
