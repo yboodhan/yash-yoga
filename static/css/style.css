@@ -90,3 +90,8 @@ input, label {
     z-index: 2;
     font-size: 1.5em;
 }
+
+.profile {
+    min-height: 20em;
+    max-height: 20em;
+}

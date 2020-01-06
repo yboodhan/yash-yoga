@@ -1,12 +1,28 @@
 <h1><%= user.username %>'s Profile</h1>
+
+<hr>
+
 <div class="row">
     <div class="col s4">
-        <img class="responsive-img" alt="user image" src="<%= user.photoUrl %>">
+        <img class="responsive-img profile" alt="user image" src="<%= user.photoUrl %>">
+        <br>
+        <hr>
+        <form>
+            <!-- create hidden form to allow editing of user info -->
+
+            <button class="submit" type="submit" name="action">Edit Profile
+                <i class="fa fa-pencil"></i>
+            </button>
+        </form>
+
     </div>
-    <div class="col s8">
-        <h2><%= user.firstname %> <%= user.lastname %></h2>
-        <p><strong>Admin Status:</strong> <%= user.admin ? 'Yes' : 'No' %></p>
-        <p>Bio: <%= user.bio %></p>
-        <p>DOB: <%= user.birthdate %></p>
+    <div class="col s8 left-align">
+        <h2>Full name: <%= user.firstname %> <%= user.lastname %></h2>
+        <h4><strong>Admin Status:</strong> <%= user.admin ? 'Yes' : 'No' %></h4>
+        <hr>
+        <h4>Bio: <%= user.bio %></h4>
+        <hr>
+        <h4>Email: <%= user.email %></h4>
+
     </div>
 </div>
