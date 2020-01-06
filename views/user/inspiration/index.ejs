@@ -1,8 +1,8 @@
 <div class="quote">
     <h1>Daily Dose Of Inspiration:</h1>
-    <h3>"<%= quote.quote %>"</h3>
-    <% if (quote.author) { %>
-        <h4 class="float-right">- <%= quote.author %></h4>
+    <h3>"<%= quote.quoteText %>"</h3>
+    <% if (quote.authorAuthor) { %>
+        <h4 class="float-right">- <%= quote.authorAuthor %></h4>
     <% } else { %>
     <h4 class="float-right">- Anonymous</h4>
     <% } %>
@@ -13,30 +13,32 @@
         
         <div class="col s3">
             <h4><strong>Other Devotees:</strong></h4>
+            <hr>
             <div class="user-panel">
                 <% users.forEach ( user => { %> 
                     <div class="user-cards">
                         <h5><strong><%= user.username %></strong></h5>
                         <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
                         <p class="text-truncate"><%= user.bio %></p>
+                        <button>Add as friend.</button>
                     </div>
                 <% }) %>
             </div>
         </div>
 
         <div class="col s5">
-            <% users.forEach ( user => { %> 
-                <div class="box">
-                    <%= user.firstname %> <%= user.lastname %>
-                </div>
-            <% }) %>
+            <h4><strong>New Routines:</strong></h4>
+            <hr>
+            <div>
+                New Routines
+            </div>
         </div>
         <div class="col s5">
-            <% users.forEach ( user => { %> 
-                <div class="box">
-                    <%= user.firstname %> <%= user.lastname %>
-                </div>
-            <% }) %>
+            <h4><strong>Chat:</strong></h4>
+            <hr>
+            <div>
+                Chat here.
+            </div>
         </div>
     </div>
 </div>

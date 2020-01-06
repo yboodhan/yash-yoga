@@ -102,13 +102,12 @@ input, label {
 }
 
 .user-cards {
-    border: 0.05em solid rgba(190, 188, 188, 0.52);
-    border-radius: 5%;
+    border: 0.05em solid rgba(245, 220, 187, 0.472);
     padding: 0.5em 2em 0.5em 2em;
-    margin-bottom: 0.5em;
+    margin: 0.5em;
 }
 
 .user-panel {
-    max-height: 80vh;
+    max-height: 30em;
     overflow: scroll;
 }
