@@ -4,12 +4,15 @@ let axios = require('axios');
 let isLoggedIn = require('../middleware/isLoggedIn')
 
 router.get('/', isLoggedIn, (req, res) => {
-    axios.get('https://quote-garden.herokuapp.com/quotes/random')
+    axios.get('https://quotes.rest/qod', { headers: 
+        {
+            "Accept": "application/json"
+        }
+    })
     .then( response => {
         db.user.findAll()
         .then( users => {
-            console.log(users)
-            res.render('user/inspiration/index', { quote: response.data, users })
+            res.render('user/inspiration/index', { quote: response.data.contents.quotes[0], users })
         })
     })
     .catch(err => {
