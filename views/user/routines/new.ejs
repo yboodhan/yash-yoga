@@ -14,41 +14,37 @@
 
             <h5><strong>Step 1: Choose your poses and their durations.</h5></strong>
             <br>
-            <div class="scroll-panel">
-                <% let count = 1 %>
-                <% let number_of_poses = 10 %>
-                <% while (number_of_poses > 0) { %> 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="poses">Pose <%= count %></label>
-                                <select class="form-control" name="pose" id="poses">
-                                <% poses.forEach( pose => { %>
-                                    <option value="<%= pose.sanskrit_name %>">
-                                        <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
-                                    </option>
-                                <% }) %>
-                                </select>
-                            </div>
-    
-                            <div class="col-6">
-                                <label for="poses">Duration (seconds)</label>
-                                <select class="form-control" name="duration" id="durations">
-                                <% let duration = 10 %>
-                                <% while (duration <= 60) { %> 
-                                    <option value="<%= duration %>">
-                                        <%= duration %>
-                                    </option>
-                                    <% duration ++ %>
-                                <% } %>
-                                </select>
-                            </div>
+            <button type="button" id="add_pose_button"><i class="fa fa-plus-square"></i> Add Pose</button>
+            <br>
+            <br>
+            <div class="scroll-panel" id="select_pose_form">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-9">
+                            <label for="poses">Pose</label>
+                            <select class="form-control" name="pose" id="poses">
+                            <% poses.forEach( pose => { %>
+                                <option value="<%= pose.sanskrit_name %>">
+                                    <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
+                                </option>
+                            <% }) %>
+                            </select>
                         </div>
 
+                        <div class="col-3">
+                            <label for="poses">Duration (seconds)</label>
+                            <select class="form-control" name="duration" id="durations">
+                            <% let duration = 10 %>
+                            <% while (duration <= 60) { %> 
+                                <option value="<%= duration %>">
+                                    <%= duration %>
+                                </option>
+                                <% duration ++ %>
+                            <% } %>
+                            </select>
+                        </div>
                     </div>
-                    <% number_of_poses-- %>
-                    <% count++ %>
-                <% } %>
+                </div>
             </div>
             <hr>
             <br>
@@ -179,6 +175,14 @@ document.addEventListener('DOMContentLoaded', () => {
     addEventListener(musicButton_1, betterdays)
     addEventListener(musicButton_2, india)
     addEventListener(musicButton_3, relaxing)
+
+    let addPoseButton = document.getElementById('add_pose_button')
+    let selectPoseForm = document.getElementById('select_pose_form')
+
+    addPoseButton.addEventListener( 'click', () => {
+        let field = document.getElementById('select_pose_form').children[0].cloneNode(true)
+        selectPoseForm.appendChild(field)
+    })
 })
 
 </script>

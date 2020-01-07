@@ -13,4 +13,5 @@ router.get('/new', isLoggedIn, (req, res) => {
 router.post('/test', isLoggedIn, (req, res) => {
     res.send(req.body)
 })
+
 module.exports = router
