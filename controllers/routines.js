@@ -10,4 +10,7 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/routines/new', { poses: poses })
 })
 
+router.post('/test', isLoggedIn, (req, res) => {
+    res.send(req.body)
+})
 module.exports = router

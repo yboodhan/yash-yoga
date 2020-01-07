@@ -2,19 +2,95 @@
 
 <br>
 
-<div class="row">
+<div class="row" id="routine_form">
     <div class="col-8">
-        <h4><strong>Yoga Poses:</strong></h4>
-        <hr>
-        <div class="scroll-panel">
-            <% poses.forEach( pose => { %>
-                <div class="user-cards">
-                    <img alt="yoga pose" src="<%= pose.img_url %>" height="50" class="float-left yoga-pose">
-                    <h4 class="left-align"><%= pose.sanskrit_name %></h4>
-                    <h5 class="left-align"><%= pose.english_name %></h5>
+
+        <form action="/routines/test" method="POST">
+
+            <h4><strong>Create here:</strong></h4>
+            <p>Reference the yoga poses and music choices on the right to help you construct your yoga routine.</p>
+            <hr>
+            <br>
+
+            <h5><strong>Step 1: Choose your poses and their durations.</h5></strong>
+            <br>
+            <div class="scroll-panel">
+                <% let count = 1 %>
+                <% let number_of_poses = 10 %>
+                <% while (number_of_poses > 0) { %> 
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="poses">Pose <%= count %></label>
+                                <select class="form-control" name="pose" id="poses">
+                                <% poses.forEach( pose => { %>
+                                    <option value="<%= pose.sanskrit_name %>">
+                                        <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
+                                    </option>
+                                <% }) %>
+                                </select>
+                            </div>
+    
+                            <div class="col-6">
+                                <label for="poses">Duration (seconds)</label>
+                                <select class="form-control" name="duration" id="durations">
+                                <% let duration = 10 %>
+                                <% while (duration <= 60) { %> 
+                                    <option value="<%= duration %>">
+                                        <%= duration %>
+                                    </option>
+                                    <% duration ++ %>
+                                <% } %>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <% number_of_poses-- %>
+                    <% count++ %>
+                <% } %>
+            </div>
+            <hr>
+            <br>
+
+            <h5><strong>Step 2: Choose your music.</strong></h5>
+            <br>
+            <div class="scroll-panel">
+                    <div class="form-group">
+                        <select class="form-control" name="music" id="music">
+                            <option value="bensound-betterdays">
+                                Betterdays
+                            </option>
+                            <option value="bensound-india">
+                                India
+                            </option>
+                            <option value="bensound-relaxing">
+                                Relaxing
+                            </option>
+                        </select>
+                    </div>
+            </div>
+            <hr>
+            <br>
+
+            <h5><strong>Step 3: Choose your privacy settings.</strong></h5>
+            <br>
+            <div class="form-group required">
+                <div class="custom-control custom-radio left-align">
+                    <input type="radio" id="private_true" name="private" class="custom-control-input" value="true" checked>
+                    <label class="custom-control-label black-text" for="private_true"><i class="fa fa-lock"></i> Private</label>
                 </div>
-            <% }) %>
-        </div>
+                <div class="custom-control custom-radio left-align">
+                    <input type="radio" id="private_false" name="private" class="custom-control-input" value="false">
+                    <label class="custom-control-label black-text" for="private_false"><i class="fa fa-unlock"></i> Public</label>
+                </div>
+            </div>
+            <hr>
+
+            <button type="submit">CREATE</button>
+
+        </form>
+
     </div>
 
     <div class="col-4">
@@ -58,6 +134,8 @@
                             <h4 class="left-align">Relaxing</h4>
                             <h5 class="left-align">Provided by Bensound.</h5>
                         </div>
+
+                        <button id="stop-button"><i class="fa fa-stop-circle"></i></i> STOP MUSIC</button>
                 </div>
             </div>
         </div>
@@ -66,13 +144,41 @@
     </div>
 </div>
 
+<audio id="bensound-betterdays" src="/music/bensound-betterdays.mp3" loop></audio>
+<audio id="bensound-india" src="/music/bensound-india.mp3" loop></audio>
+<audio id="bensound-relaxing" src="/music/bensound-relaxing.mp3" loop></audio>
+
 <script>
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    document.getElementById('music1').addEventListener( 'click', () => {
-    console.log('CLICKED!')
+    document.getElementById('stop-button').addEventListener( 'click', () => {
+        betterdays.pause()
+        india.pause()
+        relaxing.pause()
     })
-    
+
+    let musicButton_1 = document.getElementById('music1')
+    let musicButton_2 = document.getElementById('music2')
+    let musicButton_3 = document.getElementById('music3')
+
+    let betterdays = document.getElementById('bensound-betterdays')
+    let india = document.getElementById('bensound-india')
+    let relaxing = document.getElementById('bensound-relaxing')
+
+    const addEventListener = (button, file) => {
+        button.addEventListener( 'click', () => {
+            betterdays.pause()
+            india.pause()
+            relaxing.pause()
+
+            file.play()
+        })
+    }
+
+    addEventListener(musicButton_1, betterdays)
+    addEventListener(musicButton_2, india)
+    addEventListener(musicButton_3, relaxing)
 })
 
 </script>

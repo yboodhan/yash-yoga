@@ -128,3 +128,15 @@ input, label {
     padding: 2em !important;
     margin-bottom: 1em;
 }
+
+label {
+    font-size: 1em !important;
+}
+
+form {
+    margin: 2em;
+}
+
+#routine_form {
+    display: 'none';
+}
