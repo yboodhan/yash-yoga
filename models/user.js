@@ -62,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   user.associate = function(models) {
     // associations can be defined here
+    models.user.hasMany(models.routine)
   };
 
   //need function keyword here to use this, attached to user object

@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   routine.associate = function(models) {
     // associations can be defined here
+    models.routine.belongsTo(models.user)
+    models.routine.hasMany(models.pose)
+    models.routine.belongsToMany(models.pose, {
+      through: 'routines_poses'
+    })
   };
   return routine;
 };

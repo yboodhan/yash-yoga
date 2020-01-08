@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   pose.associate = function(models) {
     // associations can be defined here
+    models.pose.belongsToMany(models.routine, {
+      through: 'routines_poses'
+    })
   };
   return pose;
 };
