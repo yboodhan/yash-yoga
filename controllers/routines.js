@@ -2,6 +2,7 @@ let router = require('express').Router()
 let poses = require('../yoga_api.json')
 let isLoggedIn = require('../middleware/isLoggedIn')
 let db = require('../models')
+let async = require('async')
 
 router.get('/', isLoggedIn, (req, res) => {
     res.render('user/routines/index')
@@ -12,16 +13,48 @@ router.get('/new', isLoggedIn, (req, res) => {
 })
 
 router.post('/', isLoggedIn, (req, res) => {
-    db.routine.findOrCreate({
-        where: { email : req.body.email },
-        defaults: req.body
+    let poses = req.body.pose
+
+    console.log(poses, 'all poses for routine')
+    let duration = req.body.duration
+    console.log(duration, 'length of pose')
+
+    db.routine.create({
+        name: req.body.name,
+        music: req.body.music,
+        private: req.body.private,
+        userId: req.body.creatorId
     })
-    .then(([user, wasCreated]) => {
-        res.render('user/routines/index')
+    .then( (routine) => {
+        console.log(routine, 'created routine')
+        async.forEachOf(poses, (pose, index, done) => {
+            console.log(pose, index)
+            db.pose.findOne({ 
+                where: {sanskrit_name: pose}
+            })
+            .then( (pose) => {
+                console.log(pose, 'found pose')
+                routine.addPose(pose, { through: { duration: duration[index] }})
+                .then(() => {
+                    done()
+                })
+                .catch( (error) => {
+                    console.log(error)
+                    res.render('error')
+                    done()
+                })
+            })
+            .catch( (error) => {
+                console.log(error)
+                res.render('error')
+                done()
+            })
+        }, () => {
+            res.redirect('user/routines/index')
+        })
     })
-    .catch( err => {
-        console.log(err)
-        req.flash('error', 'Something went wrong, try again.')
+    .catch( (error) => {
+        console.log(error)
         res.render('error')
     })
 })
