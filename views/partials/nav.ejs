@@ -1,22 +1,22 @@
-<nav class="nav-extended deep-orange">
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo center"> Ỵash ❁ Ỵoga </a>
+<nav class="nav-extended">
+  <div class="nav justify-content-center brand-logo"">
+    <a href="#"> Ỵash ❁ Ỵoga </a>
   </div>
 
   <div class="nav-content">
-    <ul class="tabs tabs-transparent">
+    <ul class="tabs nav nav-tabs nav-fill">
       <% if (!user) { %>
-      <li class="tab"><a href="/"><i class="fa fa-home"></i> Home</a></li>
-      <li class="tab"><a href="/auth/signup">Sign-Up</a></li>
-      <li class="tab"><a href="/auth/login">Login</a></li>
+      <li class="tab nav-item"><a href="/"><i class="fa fa-home"></i> Home</a></li>
+      <li class="tab nav-item"><a href="/auth/signup">Sign-Up</a></li>
+      <li class="tab nav-item"><a href="/auth/login">Login</a></li>
       <% } else { %>
-      <li class="tab"><a href="/routines"><i class="fa fa-folder"></i> My Routines</a></li>
-      <li class="tab"><a href="/journal"><i class="fa fa-book"></i> My Journal</a></li>
-      <li class="tab"><a href="/articles"><i class="fa fa-newspaper-o"></i> Articles</a></li>
-      <li class="tab"><a href="/inspiration"><i class="fa fa-users"></i> Get Inspired</a></li>
+      <li class="tab nav-item"><a href="/routines"><i class="fa fa-folder"></i> My Routines</a></li>
+      <li class="tab nav-item"><a href="/journal"><i class="fa fa-book"></i> My Journal</a></li>
+      <li class="tab nav-item"><a href="/articles"><i class="fa fa-newspaper-o"></i> Articles</a></li>
+      <li class="tab nav-item"><a href="/inspiration"><i class="fa fa-users"></i> Get Inspired</a></li>
 
       <div class="dropdown-show">
-        <li class="tab dropdown-toggle float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class="tab nav-item dropdown-toggle float-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= user.firstname %> <i class="fa fa-user-circle small"></i>
         </li>
         <div class="dropdown-menu">

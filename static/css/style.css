@@ -27,6 +27,8 @@ main {
 
 .dropdown-item {
     max-height: 2em;
+    background-color: white !important;
+    color: #ff5722 !important;
 }
 
 .dropdown-toggle {
@@ -36,6 +38,7 @@ main {
 .tabs, .tabs a, footer {
     font-family: 'Amatic SC', cursive;
     font-size: 1.3em !important;
+    background-color: #ff5722;
 }
 
 .dropdown-toggle {
@@ -51,6 +54,7 @@ main {
     margin-top: 0.2em;
     font-family: 'Amatic SC', cursive;
     font-size: 3em !important;
+    color: white;
 }
 
 .brand-logo:hover, a:hover, button a:hover, button:hover {
@@ -82,10 +86,10 @@ button a, button, .submit {
     margin-bottom: 0.5em;
 }
 
-input, label {
+/* input, label {
     font-size: 1.5em !important;
     font-weight: bold;
-}
+} */
 
 .toast {
     font-family: 'Amatic SC', cursive;
@@ -129,9 +133,9 @@ input, label {
     margin-bottom: 1em;
 }
 
-label {
+/* label {
     font-size: 1em !important;
-}
+} */
 
 form {
     margin: 2em;
@@ -153,4 +157,21 @@ form {
     background-clip: padding-box !important;
     border: 1px solid #ced4da !important;
     border-radius: .25rem !important;
+}
+
+.nav-extended, .tabs {
+    background-color: #ff5722;
+    color: white;
+}
+
+a {
+    color: white !important;
+}
+
+.toast {
+    padding: 1em;
+}
+
+.control {
+    background-color: #ff5722 !important;
 }

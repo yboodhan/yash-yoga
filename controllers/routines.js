@@ -14,10 +14,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 
 router.post('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
-
-    console.log(poses, 'all poses for routine')
     let duration = req.body.duration
-    console.log(duration, 'length of pose')
 
     db.routine.create({
         name: req.body.name,
@@ -26,14 +23,11 @@ router.post('/', isLoggedIn, (req, res) => {
         userId: req.body.creatorId
     })
     .then( (routine) => {
-        console.log(routine, 'created routine')
         async.forEachOf(poses, (pose, index, done) => {
-            console.log(pose, index)
             db.pose.findOne({ 
                 where: {sanskrit_name: pose}
             })
             .then( (pose) => {
-                console.log(pose, 'found pose')
                 routine.addPose(pose, { through: { duration: duration[index] }})
                 .then(() => {
                     done()
@@ -50,13 +44,30 @@ router.post('/', isLoggedIn, (req, res) => {
                 done()
             })
         }, () => {
-            res.redirect('user/routines/index')
+            res.redirect('/routines')
         })
     })
     .catch( (error) => {
         console.log(error)
         res.render('error')
     })
+})
+//remember to add isLoggedin here!!!!!!!!
+router.get('/:id', (req, res) => {
+    let id = req.params.id
+    db.routine.findOne( {
+        where: { id: id },
+        include: [db.pose, db.user]
+    })
+    .then( (routine) => {
+        console.log(routine)
+        res.render('user/routines/show', { routine: routine } )
+    })
+    .catch( (error) => {
+        console.log(error)
+        res.render('error')
+    })
+    
 })
 
 module.exports = router

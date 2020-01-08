@@ -10,14 +10,14 @@ let successes = '<%- alerts.success %>'
     if (errors) {
         M.toast({
           html: errmsg.concat(errors),
-          classes: 'toast red darken-4',
+          classes: 'toast text-white bg-danger',
           displayLength: 4000
         })
     }
     if (successes) {
       M.toast({
           html: successes,
-          classes: 'toast teal accent-4',
+          classes: 'toast text-white bg-success',
           displayLength: 4000
         })
     }

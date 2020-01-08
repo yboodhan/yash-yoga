@@ -9,57 +9,53 @@
 <h1>Signup</h1>
 
 <div class="row">
-    <form method="POST" action="/auth/signup" class="col s12">
+    <form method="POST" action="/auth/signup" class="col-12">
         <div class="row">
-        <div class="input-field col s6">
-            <input id="firstName" type="text" class="validate" name="firstname" value="<%= data.firstname %>">
+        <div class="form-group col-6">
             <label for="firstName">First Name</label>
+            <input id="firstName" type="text" class="validate form-control" name="firstname" value="<%= data.firstname %>">
         </div>
-        <div class="input-field col s6">
-            <input id="lastName" type="text" class="validate" name="lastname" value="<%= data.lastname %>">
+        <div class="form-group col-6">
             <label for="lastName">Last Name</label>
+            <input id="lastName" type="text" class="validate form-control" name="lastname" value="<%= data.lastname %>">
         </div>
         </div>
 
         <div class="row">
-        <div class="input-field col s4">
-            <input id="email" type="email" class="validate" name="email" value="<%= data.email %>">
+        <div class="form-group col-6">
             <label for="email">Email</label>
+            <input id="email" type="email" class="validate form-control" name="email" value="<%= data.email %>">
         </div>
         
-        <div class="input-field col s4">
-            <input id="userName" type="text" class="validate" name="username" value="<%= data.username %>">
+        <div class="form-group col-6">
             <label for="userName">Username</label>
+            <input id="userName" type="text" class="validate form-control" name="username" value="<%= data.username %>">
         </div>
 
-        <div class="input-field col s4">
-            <input id="birthDate" type="text" class="datepicker validate" name="birthdate" value="<%= data.birthdate %>">
-            <label for="birthDate">Birth date</label>
-        </div>
         </div>
 
         <div class="row">
-        <div class="input-field col s6">
-            <input id="password" type="password" class="validate" name="password">
+        <div class="form-group col-6">
             <label for="password">Password</label>
+            <input id="password" type="password" class="validate form-control" name="password">
         </div>
-        <div class="input-field col s6">
-            <input id="verifyPassword" type="password" class="validate" name="password_verify">
+        <div class="form-group col-6">
             <label for="verifyPassword">Verify Password</label>
+            <input id="verifyPassword" type="password" class="validate form-control" name="password_verify">
         </div>
         </div>
 
         <div class="row">
-        <div class="input-field col s12">
-            <input id="profile" type="url" class="validate" name="photoUrl" value="<%= data.photoUrl %>">
+        <div class="form-group col-12">
             <label for="profile">Profile Picture URL</label>
+            <input id="profile" type="url" class="validate form-control" name="photoUrl" value="<%= data.photoUrl %>">
         </div>
         </div>
 
         <div class="row">
-        <div class="input-field col s12">
-            <textarea id="bio" class="materialize-textarea validate" name="bio"><%=data.bio%></textarea>
+        <div class="form-group col-12">
             <label for="bio">User Bio</label>
+            <textarea id="bio" class="form-control validate" name="bio" rows="4"><%=data.bio%></textarea>
         </div>
         </div>
 
