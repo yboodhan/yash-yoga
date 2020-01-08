@@ -10,8 +10,9 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item active" data-interval="<%= parseInt(routine.poses[0].routines_poses.duration) * 1000 %>">
         <img class="d-block w-50 mx-auto" src="<%= routine.poses[0].img_url %>" alt="yoga pose">
+        <p><%= parseInt(routine.poses[0].routines_poses.duration)%> seconds</p>
       </div>
 
       <% let poses =  routine.poses.slice(1) %>
@@ -20,7 +21,7 @@
         <% let duration = parseInt(pose.routines_poses.duration) * 1000 %>
         <div class="carousel-item" data-interval="<%= duration %>">
           <img class="d-block w-50 mx-auto" src="<%= pose.img_url %>" alt="yoga pose">
-          <p>POSE <%= pose.id %></p>
+          <p><%= duration/1000 %> seconds</p>
         </div>
       <% }) %>
 
@@ -42,28 +43,39 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script>
 
+<script>
+$('.carousel').carousel('pause')
 var t;
 
-var start = $('.carousel').find('.active').attr('data-interval');
+var start = 3000 // parseInt($('.carousel').find('.soon').attr('data-interval'))
+// $('.soon').addClass('active')
+console.log('start', start-1000)
 
-t = setTimeout("$('.carousel').carousel({interval: 1000});", start-1000);
+t = setTimeout(() => {
+  console.log('initial timeout firing')
+  $('.carousel').carousel()
+}, start-1000);
 
 $('.carousel').on('slid.bs.carousel', function () {  
      clearTimeout(t);  
-     var duration = $(this).find('.active').attr('data-interval');
+     let stay = $(this).find('.active').attr('data-interval')
+     console.log('stay', stay-1000)
     
-     $('.carousel').carousel('pause');
-     t = setTimeout("$('.carousel').carousel();", duration-1000);
+     $('.carousel').carousel('pause')
+
+     t = setTimeout(() => {
+        console.log('stay timeout firing')
+        $('.carousel').carousel();
+     }, stay-1000)
 })
 
-$('.carousel-control-next').on('click', function(){
-    clearTimeout(t);   
-});
+// $('.carousel-control-next').on('click', function(){
+//     clearTimeout(t)
+// });
 
-$('.carousel-control-prev').on('click', function(){
-    clearTimeout(t);   
-});
+// $('.carousel-control-prev').on('click', function(){
+//     clearTimeout(t)
+// });
 
 </script>
