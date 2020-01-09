@@ -5,7 +5,7 @@
 <div class="row" id="routine_form">
     <div class="col-8">
 
-        <form action="/routines/?_method=PUT" method="PUT">
+        <form action="/routines/?_method=PUT" method="POST">
 
             <h4><strong>Edit here:</strong></h4>
             <p>Reference the yoga poses and music choices on the right to help you modify your yoga routine.</p>
@@ -111,7 +111,7 @@
             <hr>
             <input type="hidden" name="creatorId" value="<%= user.id %>">
             <input type="hidden" name="routineId" value="<%= routine.id %>">
-            <button type="submit">CREATE</button>
+            <button type="submit">SUBMIT REVISED ROUTINE</button>
 
         </form>
 

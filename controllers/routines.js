@@ -24,7 +24,7 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/routines/new', { poses: poses })
 })
 
-//Edit an existing routine
+// Edit an existing routine
 router.get('/edit/:id', isLoggedIn, (req, res) => {
     db.routine.findOne({
         where: { id: req.params.id },
@@ -47,6 +47,9 @@ router.get('/edit/:id', isLoggedIn, (req, res) => {
 })
 
 router.put('/', (req, res) => {
+    let poses = req.body.pose
+    let duration = req.body.duration
+
     db.routine.update({
         name: req.body.name,
         music: req.body.music,
@@ -55,7 +58,40 @@ router.put('/', (req, res) => {
     }, {
         where: { id: req.body.routineId }
     })
-    res.send('edited!')
+    .then( () => {
+        console.log('UPDATED')
+        async.forEachOf(poses, (p, index, done) => {
+            db.pose.findOne({ 
+                where: {sanskrit_name: p}
+            })
+            .then( (pose) => {
+                console.log('ADDING POSES')
+                // routine.addPose(pose, { through: { duration: duration[index] }})
+                db.routines_poses.create({
+                    poseId: pose.id,
+                    routineId: req.body.routineId,
+                    duration: duration[index] 
+                })
+                .then(() => {
+                    done()
+                })
+                .catch( (error) => {
+                    console.log(error)
+                    done()
+                })
+            })
+            .catch( (error) => {
+                console.log(error)
+                done()
+            })
+        }, () => {
+            res.redirect('/routines')
+        })
+    })
+    .catch( (error) => {
+        console.log(error)
+        res.render('error')
+    })
 })
 
 router.post('/', isLoggedIn, (req, res) => {
@@ -98,7 +134,7 @@ router.post('/', isLoggedIn, (req, res) => {
         res.render('error')
     })
 })
-//remember to add isLoggedin here!!!!!!!!
+
 router.get('/:id', isLoggedIn, (req, res) => {
     let id = req.params.id
     db.routine.findOne( {
@@ -106,8 +142,21 @@ router.get('/:id', isLoggedIn, (req, res) => {
         include: [db.pose, db.user]
     })
     .then( (routine) => {
-        console.log(routine)
-        res.render('user/routines/show', { routine: routine } )
+        db.routines_poses.findAll({
+            where: { routineId: id }
+        })
+        .then(connections => {
+            let tempPoses = {}
+            routine.poses.forEach(p => {
+                tempPoses[p.id] = p
+            })
+            let poses = connections.map(c => tempPoses[c.poseId])
+            res.render('user/routines/show', { routine, poses} )
+        })
+        .catch( (error) => {
+            console.log(error)
+            res.render('error')
+        })
     })
     .catch( (error) => {
         console.log(error)

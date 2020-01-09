@@ -8,7 +8,7 @@
 <div class="row">
   <div class="container col-10 slides">
     <div class="my-carousel">
-      <% routine.poses.forEach( pose => { %>
+      <% poses.forEach( pose => { %>
         <div>
           <h2><%= pose.sanskrit_name %> / <%= pose.english_name %></h2>
           <h3>Hold for: <%= pose.routines_poses.duration %> seconds</h3>
@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let stopButton = document.getElementById('stop_routine_button')
   let replayButton = document.getElementById('replay_routine_button')
   let slideNumer = 0
-  let poses = <%- JSON.stringify(routine.poses) %>
+  let poses = <%- JSON.stringify(poses) %>
+  console.log(poses)
   let currentSlide
   let nextSlide
   let length_of_pose
@@ -126,6 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('timer').innerHTML = 'Time remaining: ' + poses[currentSlide].routines_poses.duration  + ' seconds'
     let nextSlide = currentSlide + 1
     if (nextSlide < poses.length) {
+      console.log(nextSlide)
+      console.log(poses[nextSlide])
       document.getElementById('next_pose').src = poses[nextSlide].img_url
       document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
     } else {
