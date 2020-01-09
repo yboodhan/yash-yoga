@@ -27,15 +27,35 @@ router.get('/new', isLoggedIn, (req, res) => {
 //Edit an existing routine
 router.get('/edit/:id', isLoggedIn, (req, res) => {
     db.routine.findOne({
-        where: { id: req.params.id }
+        where: { id: req.params.id },
+        include: [db.pose]
     })
     .then ( routine => {
-        res.render('user/routines/edit', { routine: routine })
+        db.pose.findAll()
+        .then( poses => {
+            res.render('user/routines/edit', { routine: routine, poses: poses })
+        })
+        .catch( (error) => {
+            console.log(error)
+            res.render('error')
+        })
     })
     .catch( (error) => {
         console.log(error)
         res.render('error')
     })
+})
+
+router.put('/', (req, res) => {
+    db.routine.update({
+        name: req.body.name,
+        music: req.body.music,
+        private: req.body.private,
+        userId: req.body.creatorId
+    }, {
+        where: { id: req.body.routineId }
+    })
+    res.send('edited!')
 })
 
 router.post('/', isLoggedIn, (req, res) => {
@@ -97,3 +117,18 @@ router.get('/:id', isLoggedIn, (req, res) => {
 })
 
 module.exports = router
+
+// router.delete('/:id', (req, res) => {
+//     db.project.destroy({
+//       where: { id: req.params.id }
+//     })
+//     .then( () => {
+//       db.project.findAll()
+//       .then(function(projects) {
+//         res.render('main/index', { projects })
+//       })
+//     })
+//     .catch((error) => {
+//       res.status(400).render('main/404')
+//     })
+//   })

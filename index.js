@@ -6,6 +6,7 @@ let layouts = require('express-ejs-layouts')
 let session = require('express-session')
 let rowdy = require('rowdy-logger')
 let moment = require('moment')
+let methodOverride = require('method-override');
 
 // Declare express app variable
 let app = express()
@@ -18,6 +19,7 @@ let rowdyResults = rowdy.begin(app)
 app.set('view engine', 'ejs')
 app.use(layouts)
 app.use('/', express.static('static'))
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
     secret: process.env.SESSION_SECRET,
