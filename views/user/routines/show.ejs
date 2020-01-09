@@ -4,30 +4,113 @@
 <button type="button" id="stop_routine_button"><i class="fa fa-stop-circle"></i> Stop Routine</button>
 
 <hr>
+<div class="row">
+  <div class="container col-10 slides">
+    <div class="my-carousel">
+      <% routine.poses.forEach( pose => { %>
+        <div>
+          <h2><%= pose.sanskrit_name %> / <%= pose.english_name %></h2>
+          <h3><%= pose.routines_poses.duration %> seconds</h3>
+          <img src="<%= pose.img_url %>" alt="<%= pose.sanskrit_name %>" class="mx-auto" width="400">
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</div>
 
-<div class="container col-10">
+<div class="row">
+  <div class="container col-10 slides">
+    <div>
+      <h3 id="timer"></h3>
+    </div>
+    <div id="next_pose">
 
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="container col-10 slides">
+    <p>Created by <%= routine.user.firstname %> <%= routine.user.lastname %> <%= moment(routine.createdAt).calendar() %>.
+      <% if (routine.private) { %> 
+        <i class="fa fa-lock"></i>
+      <% }  else { %>
+        <i class="fa fa-unlock"></i>
+      <% } %>
+    </p>
+  </div>
 </div>
 
 <audio id="bensound-betterdays" src="/music/bensound-betterdays.mp3" loop></audio>
 <audio id="bensound-india" src="/music/bensound-india.mp3" loop></audio>
 <audio id="bensound-relaxing" src="/music/bensound-relaxing.mp3" loop></audio>
 
-<script>
-let startButton = document.getElementById('start_routine_button')
-let stopButton = document.getElementById('stop_routine_button')
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 
+<script>
+  //play ding at end of a pose to alert person
+  //play sound at end, alert last pose
+  //give 5 seconds to get into new pose, start timer
 document.addEventListener('DOMContentLoaded', () => {
+  let startButton = document.getElementById('start_routine_button')
+  let stopButton = document.getElementById('stop_routine_button')
+  let slideNumer = 0
+  let poses = <%- JSON.stringify(routine.poses) %>
+
+  $('.my-carousel').slick({
+    infinite: false,
+    centerMode: true,
+    centerPadding: '100px',
+    slidesToShow: 1,
+    fade: true,
+    cssEase: 'ease-in'
+  })
+let time
+  const timer = (seconds) => {
+    //append
+    document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds + ' seconds'
+      time = setInterval( () => {
+        if (seconds > 0) {
+        seconds--
+        //append
+        document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
+      }
+      }, 1000)
+  }
+
+  let currentSlide
+  let length_of_pose
+
+  const swapSlide = () => {
+    $('.my-carousel').slick('slickNext')
+    currentSlide = $('.my-carousel').slick('slickCurrentSlide')
+    length_of_pose = poses[currentSlide].routines_poses.duration * 1000
+    timer(poses[currentSlide].routines_poses.duration)
+    setTimeout(swapSlide, length_of_pose)
+
+    //if at end then do something different
+  }
+
   startButton.addEventListener( 'click', () => {
+    currentSlide = $('.my-carousel').slick('slickCurrentSlide')
+    length_of_pose = poses[currentSlide].routines_poses.duration * 1000
+    timer(poses[currentSlide].routines_poses.duration)
+    setTimeout(swapSlide, length_of_pose)
     startButton.style.display = 'none'
     stopButton.style.display = 'inline-block'
     document.getElementById('<%= routine.music %>').play()
     stopButton.addEventListener( 'click', () => {
       document.getElementById('<%= routine.music %>').pause()
+      $('.my-carousel').slick('slickPause')
+      console.log(time)
+      clearInterval(time)
+      stopButton.style.display = 'none'
+      startButton.style.display = 'inline-block'
     })
-
-    //start the slideshow
-
   })
 })
 </script>

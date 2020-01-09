@@ -179,3 +179,7 @@ a {
 #stop_routine_button {
     display: none;
 }
+
+.slick-arrow {
+    background-color: red !important;
+}
