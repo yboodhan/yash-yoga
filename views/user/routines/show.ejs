@@ -127,13 +127,20 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   startButton.addEventListener( 'click', () => {
+    clearInterval(interval)
+    clearTimeout(timeout)
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
     nextSlide = currentSlide + 1
-    document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
-    document.getElementById('next_pose').src = poses[nextSlide].img_url
-    length_of_pose = poses[currentSlide].routines_poses.duration * 1000
-    timer(poses[currentSlide].routines_poses.duration)
-    timeout = setTimeout(swapSlide, length_of_pose)
+    if (nextSlide < poses.length) {
+      document.getElementById('next_pose').src = poses[nextSlide].img_url
+      document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
+      length_of_pose = poses[currentSlide].routines_poses.duration * 1000
+      timer(poses[currentSlide].routines_poses.duration)
+      timeout = setTimeout(swapSlide, length_of_pose)
+    } else {
+      document.getElementsByClassName('next_pose')[0].style.display = 'none'
+      timer(poses[currentSlide].routines_poses.duration)
+    }
     startButton.style.display = 'none'
     stopButton.style.display = 'inline-block'
     document.getElementById('<%= routine.music %>').play()
