@@ -165,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
       $('.my-carousel').slick('slickGoTo', 0)
       currentSlide = $('.my-carousel').slick('slickCurrentSlide')
       nextSlide = currentSlide + 1
-      document.getElementById('timer').innerHTML = 'Time remaining: ' + poses[currentSlide].routines_poses.duration  + ' seconds'
-      document.getElementById('next_pose').src = poses[nextSlide].img_url
+      document.getElementById('timer').innerHTML = ''
       document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
+      nextSlide < poses.length - 1 ? document.getElementById('next_pose').src = poses[nextSlide].img_url:document.getElementsByClassName('next_pose')[0].style.display = 'none'
       stopButton.style.display = 'none'
       startButton.style.display = 'inline-block'
     })
