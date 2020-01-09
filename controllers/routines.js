@@ -53,7 +53,7 @@ router.post('/', isLoggedIn, (req, res) => {
     })
 })
 //remember to add isLoggedin here!!!!!!!!
-router.get('/:id', (req, res) => {
+router.get('/:id', isLoggedIn, (req, res) => {
     let id = req.params.id
     db.routine.findOne( {
         where: { id: id },
