@@ -69,17 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
     fade: true,
     cssEase: 'ease-in'
   })
-let time
+let times = []
   const timer = (seconds) => {
     //append
     document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds + ' seconds'
-      time = setInterval( () => {
+      times.push(setInterval( () => {
         if (seconds > 0) {
         seconds--
         //append
         document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
       }
-      }, 1000)
+      }, 1000))
   }
 
   let currentSlide
@@ -106,8 +106,9 @@ let time
     stopButton.addEventListener( 'click', () => {
       document.getElementById('<%= routine.music %>').pause()
       $('.my-carousel').slick('slickPause')
-      console.log(time)
-      clearInterval(time)
+      for (let i = 0; i < times.length; i++) {
+        clearInterval(times[i])
+      }
       stopButton.style.display = 'none'
       startButton.style.display = 'inline-block'
     })
