@@ -2,6 +2,7 @@
 
 <button type="button" id="start_routine_button"><i class="fa fa-play-circle"></i> Start Routine</button>
 <button type="button" id="stop_routine_button"><i class="fa fa-stop-circle"></i> Stop Routine</button>
+<button type="button" id="replay_routine_button"><i class="fa fa-repeat"></i> Replay Routine</button>
 
 <hr>
 <div class="row">
@@ -60,8 +61,14 @@
 document.addEventListener('DOMContentLoaded', () => {
   let startButton = document.getElementById('start_routine_button')
   let stopButton = document.getElementById('stop_routine_button')
+  let replayButton = document.getElementById('replay_routine_button')
   let slideNumer = 0
   let poses = <%- JSON.stringify(routine.poses) %>
+  let currentSlide
+  let nextSlide
+  let length_of_pose
+  let timeout
+  let interval
 
   $('.my-carousel').slick({
     infinite: false,
@@ -72,21 +79,22 @@ document.addEventListener('DOMContentLoaded', () => {
     cssEase: 'ease-in'
   })
 
-  let interval
   const timer = (seconds) => {
     document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds + ' seconds'
       interval = setInterval( () => {
         if (seconds > 0) {
         seconds--
-        document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
+        if (currentSlide == poses.length - 1 && seconds == 0) {
+          document.getElementById('timer').innerHTML = 'ROUTINE COMPLETE! CONGRATS!'
+          stopButton.style.display = 'none'
+          startButton.style.display = 'none'
+          replayButton.style.display = 'inline-block'
+        } else {
+          document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
+        }
       }
       }, 1000)
   }
-
-  let currentSlide
-  let nextSlide
-  let length_of_pose
-  let timeout
 
   const swapSlide = () => {
     $('.my-carousel').slick('slickNext')
@@ -149,6 +157,17 @@ document.addEventListener('DOMContentLoaded', () => {
       $('.my-carousel').slick('slickPause')
       clearInterval(interval)
       clearTimeout(timeout)
+      stopButton.style.display = 'none'
+      startButton.style.display = 'inline-block'
+    })
+    replayButton.addEventListener( 'click', () => {
+      replayButton.style.display = 'none'
+      $('.my-carousel').slick('slickGoTo', 0)
+      currentSlide = $('.my-carousel').slick('slickCurrentSlide')
+      nextSlide = currentSlide + 1
+      document.getElementById('timer').innerHTML = 'Time remaining: ' + poses[currentSlide].routines_poses.duration  + ' seconds'
+      document.getElementById('next_pose').src = poses[nextSlide].img_url
+      document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
       stopButton.style.display = 'none'
       startButton.style.display = 'inline-block'
     })
