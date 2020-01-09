@@ -1,11 +1,11 @@
 //Read ENV variables
 require('dotenv').config()
 
-//Require passport and any passport strategies you wish to use
+//Require passport and any passport strategies
 let passport = require('passport')
 let FacebookStategy = require('passport-facebook').Strategy
 let GithubStrategy = require('passport-github2').Strategy
-let LocalStrategy = require('passport-local').Strategy //this is a class, not camelcase
+let LocalStrategy = require('passport-local').Strategy
 
 //Reference the models folder to access the db
 let db = require('../models')
@@ -78,7 +78,7 @@ passport.use(new GithubStrategy({
         }
     })
     .then(([user, wasCreated]) => {
-        //find out if user was already github user and if so, need new token
+        //Find out if user was already github user and if so, need new token
         if (!wasCreated && user.githubId) {
             user.update({
                 githubToken: accessToken
