@@ -69,28 +69,30 @@ document.addEventListener('DOMContentLoaded', () => {
     fade: true,
     cssEase: 'ease-in'
   })
-let times = []
+
+  let interval
   const timer = (seconds) => {
     //append
     document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds + ' seconds'
-      times.push(setInterval( () => {
+      interval = setInterval( () => {
         if (seconds > 0) {
         seconds--
         //append
         document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
       }
-      }, 1000))
+      }, 1000)
   }
 
   let currentSlide
   let length_of_pose
+  let timeout
 
   const swapSlide = () => {
     $('.my-carousel').slick('slickNext')
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
     length_of_pose = poses[currentSlide].routines_poses.duration * 1000
     timer(poses[currentSlide].routines_poses.duration)
-    setTimeout(swapSlide, length_of_pose)
+    timeout = setTimeout(swapSlide, length_of_pose)
 
     //if at end then do something different
   }
@@ -99,16 +101,15 @@ let times = []
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
     length_of_pose = poses[currentSlide].routines_poses.duration * 1000
     timer(poses[currentSlide].routines_poses.duration)
-    setTimeout(swapSlide, length_of_pose)
+    timeout = setTimeout(swapSlide, length_of_pose)
     startButton.style.display = 'none'
     stopButton.style.display = 'inline-block'
     document.getElementById('<%= routine.music %>').play()
     stopButton.addEventListener( 'click', () => {
       document.getElementById('<%= routine.music %>').pause()
       $('.my-carousel').slick('slickPause')
-      for (let i = 0; i < times.length; i++) {
-        clearInterval(times[i])
-      }
+      clearInterval(interval)
+      clearTimeout(timeout)
       stopButton.style.display = 'none'
       startButton.style.display = 'inline-block'
     })
