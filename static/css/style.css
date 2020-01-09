@@ -175,3 +175,7 @@ a {
 .control {
     background-color: #ff5722 !important;
 }
+
+#stop_routine_button {
+    display: none;
+}

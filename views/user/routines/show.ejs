@@ -1,81 +1,103 @@
 <h1><%= routine.name %></h1>
 
 <button type="button" id="start_routine_button"><i class="fa fa-play-circle"></i> Start Routine</button>
+<button type="button" id="stop_routine_button"><i class="fa fa-stop-circle"></i> Stop Routine</button>
 
 <hr>
 
 <div class="container col-10">
 
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-      <div class="carousel-item active" data-interval="<%= parseInt(routine.poses[0].routines_poses.duration) * 1000 %>">
-        <img class="d-block w-50 mx-auto" src="<%= routine.poses[0].img_url %>" alt="yoga pose">
-        <p><%= parseInt(routine.poses[0].routines_poses.duration)%> seconds</p>
-      </div>
-
-      <% let poses =  routine.poses.slice(1) %>
-
-      <% poses.forEach( (pose) => { %>
-        <% let duration = parseInt(pose.routines_poses.duration) * 1000 %>
-        <div class="carousel-item" data-interval="<%= duration %>">
-          <img class="d-block w-50 mx-auto" src="<%= pose.img_url %>" alt="yoga pose">
-          <p><%= duration/1000 %> seconds</p>
-        </div>
-      <% }) %>
-
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon control" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span class="carousel-control-next-icon control" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-
-  </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<audio id="bensound-betterdays" src="/music/bensound-betterdays.mp3" loop></audio>
+<audio id="bensound-india" src="/music/bensound-india.mp3" loop></audio>
+<audio id="bensound-relaxing" src="/music/bensound-relaxing.mp3" loop></audio>
 
 <script>
-$('.carousel').carousel('pause')
-var t;
+//start button
+//check music choice and play that one
+let startButton = document.getElementById('start_routine_button')
+let stopButton = document.getElementById('stop_routine_button')
 
-var start = 3000 // parseInt($('.carousel').find('.soon').attr('data-interval'))
-// $('.soon').addClass('active')
-console.log('start', start-1000)
+document.addEventListener('DOMContentLoaded', () => {
+  startButton.addEventListener( 'click', () => {
+    startButton.style.display = 'none'
+    stopButton.style.display = 'inline-block'
 
-t = setTimeout(() => {
-  console.log('initial timeout firing')
-  $('.carousel').carousel()
-}, start-1000);
-
-$('.carousel').on('slid.bs.carousel', function () {  
-     clearTimeout(t);  
-     let stay = $(this).find('.active').attr('data-interval')
-     console.log('stay', stay-1000)
+    document.getElementById('<%= routine.music %>').play()
     
-     $('.carousel').carousel('pause')
-
-     t = setTimeout(() => {
-        console.log('stay timeout firing')
-        $('.carousel').carousel();
-     }, stay-1000)
+  })
 })
 
-// $('.carousel-control-next').on('click', function(){
-//     clearTimeout(t)
-// });
 
-// $('.carousel-control-prev').on('click', function(){
-//     clearTimeout(t)
-// });
+// const INTERVAL_DELAY = 2500
+// let currentImages = []
+// let currentIndex = 0
+// let interval = null
+
+// // Stop Button Click
+// document.getElementById('stop-button').addEventListener('click', () => {
+//   // Hide the results
+//   document.getElementById('slideshow-container').style.visibility = 'hidden'
+
+//   // Show the search form
+//   document.getElementById('form-container').style.display = 'block'
+
+//   // Clear the interval
+//   clearInterval(interval)
+// })
+
+// const startSlideshow = () => {
+//   console.log('Starting slides')
+//   // Set current index to zero (first pic)
+//   currentIndex = 0
+
+//   // Set up the first image (so we don't have to wait)
+//   placeImage()
+
+//   // Hide the form container and show the slideshow container
+//   document.getElementById('form-container').style.display = 'none'
+//   document.getElementById('slideshow-container').style.visibility = 'visible'
+
+//   // Start the interval
+//   interval = setInterval(changeImage, INTERVAL_DELAY)
+// }
+
+// const changeImage = () => {
+//   // Increment the curent index
+//   currentIndex++
+
+//   // Check the bound of the array
+//   if (currentIndex >= currentImages.length) {
+//     currentIndex = 0
+//   }
+
+//   // Replace the image
+//   placeImage()
+// }
+
+// const placeImage = () => {
+//   // Empty the result div
+//   document.getElementById('result').innerHTML = ''
+
+//   // Create an img tag
+//   let img = document.createElement('img')
+//   img.src = currentImages[currentIndex].url
+//   img.alt = currentImages[currentIndex].title
+
+//   // Create an h2 to hold the title
+//   let h2 = document.createElement('h2')
+//   h2.textContent = currentImages[currentIndex].title + (currentImages[currentIndex].gold ? ' 🏆 ' : '')
+
+//   // Create an h3 to hold the subreddit
+//   let h3 = document.createElement('h3')
+//   h3.textContent = 'r/' + currentImages[currentIndex].subreddit
+//   h3.style.fontWeight = 'bold'
+
+//   // Add the created elements to the page (result div)
+//   document.getElementById('result').append(img)
+//   document.getElementById('result').append(h2)
+//   document.getElementById('result').append(h3)
+// }
 
 </script>
