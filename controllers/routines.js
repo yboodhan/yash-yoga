@@ -5,13 +5,13 @@ let async = require('async')
 //Get JSON file of all yoga pose info
 let poses = require('../yoga_api.json')
 
+//Routines home route, lists all routines
 router.get('/', isLoggedIn, (req, res) => {
     //Find all routines created by the user that is logged in
     db.routine.findAll({
         where: {userId: req.user.id}
     })
     .then( routines => {
-        console.log(routines)
         res.render('user/routines/index', { routines: routines })
     })
     .catch( (error) => {
@@ -22,6 +22,20 @@ router.get('/', isLoggedIn, (req, res) => {
 
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/routines/new', { poses: poses })
+})
+
+//Edit an existing routine
+router.get('/edit/:id', isLoggedIn, (req, res) => {
+    db.routine.findOne({
+        where: { id: req.params.id }
+    })
+    .then ( routine => {
+        res.render('user/routines/edit', { routine: routine })
+    })
+    .catch( (error) => {
+        console.log(error)
+        res.render('error')
+    })
 })
 
 router.post('/', isLoggedIn, (req, res) => {

@@ -1,0 +1,197 @@
+<h1>Editing <%= routine.name %></h1>
+
+<br>
+
+<div class="row" id="routine_form">
+    <div class="col-8">
+
+        <form action="/routines" method="POST">
+
+            <h4><strong>Edit here:</strong></h4>
+            <p>Reference the yoga poses and music choices on the right to help you modify your yoga routine.</p>
+            <hr>
+            <br>
+
+            <h5><strong>Step 1: Name your routine.</strong></h5>
+            <br>
+                <div class="form-group">
+                    <input class="title" type="text" name="name" value="<%= routine.name %>" required>
+                </div>
+            <br>
+            <hr>
+            <br>
+
+            <h5><strong>Step 2: Choose your poses and their durations.</h5></strong>
+            <br>
+            <button type="button" id="add_pose_button"><i class="fa fa-plus-square"></i> Add Pose</button>
+            <br>
+            <br>
+            <div class="scroll-panel" id="select_pose_form">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-9">
+                            <label for="poses">Pose</label>
+                            <select class="form-control" name="pose" id="poses">
+                            <% poses.forEach( pose => { %>
+                                <option value="<%= pose.sanskrit_name %>">
+                                    <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
+                                </option>
+                            <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="col-3">
+                            <label for="poses">Duration (seconds)</label>
+                            <select class="form-control" name="duration" id="durations">
+                            <% let duration = 10 %>
+                            <% while (duration <= 60) { %> 
+                                <option value="<%= duration %>">
+                                    <%= duration %>
+                                </option>
+                                <% duration ++ %>
+                            <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <br>
+
+            <h5><strong>Step 3: Choose your music.</strong></h5>
+            <br>
+            <div class="scroll-panel">
+                    <div class="form-group">
+                        <select class="form-control" name="music" id="music">
+                            <option value="bensound-betterdays">
+                                Betterdays
+                            </option>
+                            <option value="bensound-india">
+                                India
+                            </option>
+                            <option value="bensound-relaxing">
+                                Relaxing
+                            </option>
+                        </select>
+                    </div>
+            </div>
+            <hr>
+            <br>
+
+            <h5><strong>Step 4: Choose your privacy settings.</strong></h5>
+            <br>
+            <div class="form-group required">
+                <div class="custom-control custom-radio left-align">
+                    <input type="radio" id="private_true" name="private" class="custom-control-input" value="true" checked>
+                    <label class="custom-control-label black-text" for="private_true"><i class="fa fa-lock"></i> Private</label>
+                </div>
+                <div class="custom-control custom-radio left-align">
+                    <input type="radio" id="private_false" name="private" class="custom-control-input" value="false">
+                    <label class="custom-control-label black-text" for="private_false"><i class="fa fa-unlock"></i> Public</label>
+                </div>
+            </div>
+            <hr>
+            <input type="hidden" name="creatorId" value="<%= user.id %>">
+            <button type="submit">CREATE</button>
+
+        </form>
+
+    </div>
+
+    <div class="col-4">
+        <div class="row">
+            <div class="col scroll-box">
+                <h4><strong>Yoga Poses:</strong></h4>
+                <hr>
+                <div class="scroll-panel">
+                    <% poses.forEach( pose => { %>
+                        <div class="user-cards">
+                            <p class="float-left"><%= pose.id %></p>
+                            <img alt="yoga pose" src="<%= pose.img_url %>" height="50" class="float-left yoga-pose">
+                            <h4 class="left-align"><%= pose.sanskrit_name %></h4>
+                            <h5 class="left-align"><%= pose.english_name %></h5>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col scroll-box">
+                <h4><strong>Music:</strong></h4>
+                <hr>
+                <div>
+                        <div class="user-cards">
+                            <p class="float-left">1</p>
+                            <button id="music1"><i class="fa fa-play-circle medium"></i></button>
+                            <h4 class="left-align">Better Days</h4>
+                            <h5 class="left-align">Provided by Bensound.</h5>
+                        </div>
+                        <div class="user-cards">
+                            <p class="float-left">2</p>
+                            <button id="music2"><i class="fa fa-play-circle medium"></i></button>
+                            <h4 class="left-align">India</h4>
+                            <h5 class="left-align">Provided by Bensound.</h5>
+                        </div>
+                        <div class="user-cards">
+                            <p class="float-left">3</p>
+                            <button id="music3"><i class="fa fa-play-circle medium"></i></button>
+                            <h4 class="left-align">Relaxing</h4>
+                            <h5 class="left-align">Provided by Bensound.</h5>
+                        </div>
+
+                        <button id="stop-button"><i class="fa fa-stop-circle"></i></i> STOP MUSIC</button>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+<audio id="bensound-betterdays" src="/music/bensound-betterdays.mp3" loop></audio>
+<audio id="bensound-india" src="/music/bensound-india.mp3" loop></audio>
+<audio id="bensound-relaxing" src="/music/bensound-relaxing.mp3" loop></audio>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    document.getElementById('stop-button').addEventListener( 'click', () => {
+        betterdays.pause()
+        india.pause()
+        relaxing.pause()
+    })
+
+    let musicButton_1 = document.getElementById('music1')
+    let musicButton_2 = document.getElementById('music2')
+    let musicButton_3 = document.getElementById('music3')
+
+    let betterdays = document.getElementById('bensound-betterdays')
+    let india = document.getElementById('bensound-india')
+    let relaxing = document.getElementById('bensound-relaxing')
+
+    const addEventListener = (button, file) => {
+        button.addEventListener( 'click', () => {
+            betterdays.pause()
+            india.pause()
+            relaxing.pause()
+
+            file.play()
+        })
+    }
+
+    addEventListener(musicButton_1, betterdays)
+    addEventListener(musicButton_2, india)
+    addEventListener(musicButton_3, relaxing)
+
+    let addPoseButton = document.getElementById('add_pose_button')
+    let selectPoseForm = document.getElementById('select_pose_form')
+
+    addPoseButton.addEventListener( 'click', () => {
+        let field = document.getElementById('select_pose_form').children[0].cloneNode(true)
+        selectPoseForm.appendChild(field)
+    })
+})
+
+</script>
