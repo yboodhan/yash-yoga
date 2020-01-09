@@ -10,7 +10,7 @@
       <% routine.poses.forEach( pose => { %>
         <div>
           <h2><%= pose.sanskrit_name %> / <%= pose.english_name %></h2>
-          <h3><%= pose.routines_poses.duration %> seconds</h3>
+          <h3>Hold for: <%= pose.routines_poses.duration %> seconds</h3>
           <img src="<%= pose.img_url %>" alt="<%= pose.sanskrit_name %>" class="mx-auto" width="400">
         </div>
       <% }) %>
@@ -23,8 +23,10 @@
     <div>
       <h3 id="timer"></h3>
     </div>
-    <div id="next_pose">
-
+    <br>
+    <div class="next_pose">
+      <h3>Next up:</h3>
+      <img id="next_pose" src="#" height="50">
     </div>
   </div>
 </div>
@@ -72,33 +74,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let interval
   const timer = (seconds) => {
-    //append
     document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds + ' seconds'
       interval = setInterval( () => {
         if (seconds > 0) {
         seconds--
-        //append
         document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
       }
       }, 1000)
   }
 
   let currentSlide
+  let nextSlide
   let length_of_pose
   let timeout
 
   const swapSlide = () => {
     $('.my-carousel').slick('slickNext')
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
+    console.log(currentSlide)
+    nextSlide = currentSlide + 1
     length_of_pose = poses[currentSlide].routines_poses.duration * 1000
+    console.log(length_of_pose)
     timer(poses[currentSlide].routines_poses.duration)
-    timeout = setTimeout(swapSlide, length_of_pose)
+    if (nextSlide < poses.length) {
+      document.getElementById('next_pose').src = poses[nextSlide].img_url
+      timeout = setTimeout(swapSlide, length_of_pose)
+    } else {
+      document.getElementsByClassName('next_pose')[0].style.display = 'none'
+    }
 
     //if at end then do something different
   }
 
+  let arrows = Array.from(document.getElementsByClassName('slick-arrow'))
+  arrows.forEach( arrow => {
+    arrow.addEventListener( 'click', () => {
+    clearInterval(interval)
+    clearTimeout(timeout)
+    $('.my-carousel').slick('slickPause')
+    startButton.style.display = 'inline-block'
+    stopButton.style.display = 'none'
+    currentSlide = $('.my-carousel').slick('slickCurrentSlide')
+    document.getElementById('timer').innerHTML = 'Time remaining: ' + poses[currentSlide].routines_poses.duration  + ' seconds'
+    let nextSlide = currentSlide + 1
+    if (nextSlide < poses.length) {
+      document.getElementById('next_pose').src = poses[nextSlide].img_url
+      document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
+    } else {
+      document.getElementsByClassName('next_pose')[0].style.display = 'none'
+    }
+    })
+  })
+
   startButton.addEventListener( 'click', () => {
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
+    nextSlide = currentSlide + 1
+    document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
+    document.getElementById('next_pose').src = poses[nextSlide].img_url
     length_of_pose = poses[currentSlide].routines_poses.duration * 1000
     timer(poses[currentSlide].routines_poses.duration)
     timeout = setTimeout(swapSlide, length_of_pose)

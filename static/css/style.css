@@ -183,3 +183,7 @@ a {
 .slick-arrow {
     background-color: red !important;
 }
+
+.next_pose {
+    display: none;
+}
