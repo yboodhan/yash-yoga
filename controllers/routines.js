@@ -1,11 +1,23 @@
 let router = require('express').Router()
-let poses = require('../yoga_api.json')
 let isLoggedIn = require('../middleware/isLoggedIn')
 let db = require('../models')
 let async = require('async')
+//Get JSON file of all yoga pose info
+let poses = require('../yoga_api.json')
 
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('user/routines/index')
+    //Find all routines created by the user that is logged in
+    db.routine.findAll({
+        where: {userId: req.user.id}
+    })
+    .then( routines => {
+        console.log(routines)
+        res.render('user/routines/index', { routines: routines })
+    })
+    .catch( (error) => {
+        console.log(error)
+        res.render('error')
+    })
 })
 
 router.get('/new', isLoggedIn, (req, res) => {

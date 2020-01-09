@@ -1,4 +1,30 @@
-<h1>This is a list of all my routines.</h1> 
+<h1>Create a new routine:</h1> 
+<a href="routines/new" class="text-primary"><button>Let's get started!</button></a>
 
-<a href="routines/new" class="text-primary">Create a new routines.</a>
+<hr>
+
+<h1>Your Routines:</h1> 
+
+<% routines.forEach( (routine) => { %>
+    <div class="user-cards container col-8 text-left">
+
+        <div class="routine_buttons float-right">
+            <a href="/routines/<%= routine.id %>"><button>View</button></a>
+            <button>Edit</button>
+            <button>Delete</button>
+        </div>
+
+        <h2><%= routine.name %> </h2>
+        <p>Music: <%= routine.music %> <i class="fa fa-music"></i></p>
+        <p>Privacy: 
+            <% if (routine.private) { %>
+                Private
+                <i class="fa fa-lock"></i>
+            <% } else { %>
+                Public
+                <i class="fa fa-unlock"></i>
+            <% } %>
+        </p>
+    </div>
+<% }) %>
 
