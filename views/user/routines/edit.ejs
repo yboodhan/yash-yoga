@@ -12,7 +12,25 @@
             <hr>
             <br>
 
-            <h5><strong>Step 1: Name your routine.</strong></h5>
+            <h5><strong>Poses already in this routine:</h5></strong>
+            <br>
+                <div class="row">
+                    <div class="col-9 text-left">
+                        <% routine.poses.forEach( p => { %>
+                                <p><%= p.sanskrit_name %></p>
+                        <% }) %>
+                    </div>
+
+                    <div class="col-3">
+                        <% routine.poses.forEach( p => { %>
+                            <p><%= p.routines_poses.duration %> seconds</p>
+                        <% }) %>
+                    </div>
+                </div>
+            <hr>
+            <br>
+
+            <h5><strong>Step 1: Rename your routine.</strong></h5>
             <br>
                 <div class="form-group">
                     <input class="title" type="text" name="name" value="<%= routine.name %>" required>
@@ -21,7 +39,7 @@
             <hr>
             <br>
 
-            <h5><strong>Step 2: Choose your poses and their durations.</h5></strong>
+            <h5><strong>Step 2: Add poses and their durations to your routine.</h5></strong>
             <br>
             <button type="button" id="add_pose_button"><i class="fa fa-plus-square"></i> Add Pose</button>
             <br>
@@ -30,39 +48,27 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-9">
-                            <% routine.poses.forEach( p => { %>
-                                <label for="poses">Pose</label>
-                                <select class="form-control" name="pose" id="poses">
-                                <% poses.forEach( pose => { %>
-                                    <% if (pose.sanskrit_name == p.sanskrit_name) { %>
-                                        <option value="<%= pose.sanskrit_name %>" selected>
-                                            <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
-                                        </option>
-                                    <% } else { %>
-                                        <option value="<%= pose.sanskrit_name %>">
-                                            <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
-                                        </option>
-                                    <% } %>
-                                <% }) %>
-                                </select>
+                            <label for="poses">Pose</label>
+                            <select class="form-control" name="pose" id="poses">
+                            <% poses.forEach( pose => { %>
+                                <option value="<%= pose.sanskrit_name %>">
+                                    <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
+                                </option>
                             <% }) %>
+                            </select>
                         </div>
 
                         <div class="col-3">
-                            <% routine.poses.forEach( p => { %>
-                                <label for="poses">Duration (seconds)</label>
-                                <select class="form-control" name="duration" id="durations">
-                                <% let duration = 10 %>
-                                <% while (duration <= 60) { %> 
-                                    <% if (duration == p.routines_poses.duration) { %>
-                                        <option value="<%= duration %>" selected><%= duration %></option>
-                                    <% } else { %>
-                                        <option value="<%= duration %>"><%= duration %></option>
-                                    <% } %>
-                                    <% duration ++ %>
-                                <% } %>
-                                </select>
-                            <% }) %>
+                            <label for="poses">Duration (seconds)</label>
+                            <select class="form-control" name="duration" id="durations">
+                            <% let duration = 10 %>
+                            <% while (duration <= 60) { %> 
+                                <option value="<%= duration %>">
+                                    <%= duration %>
+                                </option>
+                                <% duration ++ %>
+                            <% } %>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -70,7 +76,7 @@
             <hr>
             <br>
 
-            <h5><strong>Step 3: Choose your music.</strong></h5>
+            <h5><strong>Step 3: Verify your music.</strong></h5>
             <br>
             <div class="scroll-panel">
                     <div class="form-group">
@@ -90,7 +96,7 @@
             <hr>
             <br>
 
-            <h5><strong>Step 4: Choose your privacy settings.</strong></h5>
+            <h5><strong>Step 4: Review your privacy settings.</strong></h5>
             <br>
             <div class="form-group required">
                 <div class="custom-control custom-radio left-align">
