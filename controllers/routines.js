@@ -62,10 +62,11 @@ router.get('/edit/:id', isLoggedIn, (req, res) => {
 //Update an existing routine
 router.put('/', (req, res) => {
     let poses = req.body.pose
+    let duration = req.body.duration
     if (typeof poses === "string") { 
         poses = poses.split()
+        duration = duration.split()
     }
-    let duration = req.body.duration
 
     db.routine.update({
         name: req.body.name,
@@ -85,6 +86,7 @@ router.put('/', (req, res) => {
             .then( (pose) => {
                 console.log('ADDING POSES')
                 console.log(pose)
+                console.log('duration at index ', index, ' is ', duration[index])
                 db.routines_poses.create({
                     poseId: pose.id,
                     routineId: req.body.routineId,
@@ -116,10 +118,11 @@ router.put('/', (req, res) => {
 //Create a new routine and add it's corresponding poses and duration for each pose
 router.post('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
+    let duration = req.body.duration
     if (typeof poses === "string") { 
         poses = poses.split()
+        duration = duration.split()
     }
-    let duration = req.body.duration
 
     db.routine.create({
         name: req.body.name,
