@@ -1,1 +1,14 @@
-<h1>Read an individual entry here!</h1>
+<h1><%= entry.title %></h1>
+<h3><%= moment(entry.createdAt).format('l') %></h3>
+
+<div class="container">
+    <h4><%= entry.content %></h4>
+</div>
+
+<hr>
+<div>
+    <a href="/journal/edit/<%= entry.id %>"><button>Edit</button></a>
+    <form action="/journal/<%= entry.id %>/?_method=DELETE" method="POST">
+        <button type="submit" class="bg-danger">Delete</button>
+    </form>
+</div>

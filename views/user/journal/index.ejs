@@ -2,3 +2,21 @@
 <a href="journal/new" class="text-primary"><button>Let's go!</button></a>
 <hr>
 <h1><%= user.username %>'s Yoga Journal</h1>
+
+<div class="scroll-panel">
+    <% entries.forEach( (entry) => { %>
+        <div class="user-cards container col-8 text-left">
+            <div class="routine_buttons float-right">
+                <a href="/journal/<%= entry.id %>"><button>View</button></a>
+                <a href="/journal/edit/<%= entry.id %>"><button>Edit</button></a>
+                <form action="/journal/<%= entry.id %>/?_method=DELETE" method="POST">
+                    <button type="submit" class="bg-danger">Delete</button>
+                </form>
+            </div>
+    
+            <h2><%= entry.title %></h2>
+            <p><%= moment(entry.createdAt).format('l') %></p>
+            <p class="text-truncate"><%= entry.content %></p>
+        </div>
+    <% }) %>
+</div>
