@@ -49,6 +49,7 @@
 <audio id="bensound-betterdays" src="/music/bensound-betterdays.mp3" loop></audio>
 <audio id="bensound-india" src="/music/bensound-india.mp3" loop></audio>
 <audio id="bensound-relaxing" src="/music/bensound-relaxing.mp3" loop></audio>
+<audio id="ding" src="/music/service-bell_daniel_simion.wav"></audio>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
@@ -100,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const swapSlide = () => {
     $('.my-carousel').slick('slickNext')
+    document.getElementById('ding').play()
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
     console.log(currentSlide)
     nextSlide = currentSlide + 1
