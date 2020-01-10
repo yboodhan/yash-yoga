@@ -1,3 +1,5 @@
+A readme.md file with explanations of the technologies used, the approach taken, installation instructions, unsolved problems, and a link to the live site.
+
 # express-auth
 
 This is the basic starting code for projects. It is a skeleton node/express app with basic local user authentication. It exists so that *I don't have to start from scratch on my projects*.
