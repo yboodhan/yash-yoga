@@ -1,5 +1,5 @@
 // Required node modules
-require('dotenv').config() //provides access to variables inside .env file
+require('dotenv').config()
 let express = require('express')
 let flash = require('connect-flash')
 let layouts = require('express-ejs-layouts')
@@ -26,11 +26,11 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
-app.use(flash()) //order matters, must come after using session!
-app.use(passport.initialize()) //must come after session
-app.use(passport.session()) //must come after session
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
-//custom middleware: add variables to locals for each page
+// Custom middleware
 app.use((req, res, next) => {
     res.locals.alerts = req.flash()
     res.locals.user = req.user
@@ -38,24 +38,23 @@ app.use((req, res, next) => {
     next()
 })
 
-// Add any controllers we have
+// Add controllers
 app.use('/auth', require('./controllers/auth'))
 app.use('/profile', require('./controllers/profile'))
 app.use('/inspiration', require('./controllers/inspiration'))
 app.use('/routines', require('./controllers/routines'))
 app.use('/journal', require('./controllers/journal'))
 
-// Add home or catch-all routes
+// Add home and catch-all routes
 app.get('/', (req,res) => {
     res.render('home')
 })
 
-// Always the bottom route, to deal with error
 app.get('*', (req,res) => {
     res.render('error')
 })
 
-app.listen(process.env.PORT || 3000, () => { //for deployment purposes
+app.listen(process.env.PORT || 3000, () => {
     console.log('You are connected! ☕️🎧')
     rowdyResults.print()
 })

@@ -1,58 +1,57 @@
-//Read ENV variables
 require('dotenv').config()
 
-//Require passport and any passport strategies
+// Require passport and any passport strategies
 let passport = require('passport')
 let FacebookStategy = require('passport-facebook').Strategy
 let GithubStrategy = require('passport-github2').Strategy
 let LocalStrategy = require('passport-local').Strategy
 
-//Reference the models folder to access the db
+// Reference the models folder to access the db
 let db = require('../models')
 
-//Serialization and deserialization functions
-//These are for passport to use to store /lookup the user info
+// Serialization and deserialization functions
+// These are for passport to use to store /lookup the user info
 
-//Serialize: reduce the user to just uniqueID
+// Serialize: reduce the user to just uniqueID
 passport.serializeUser((user, cb) => {
-    //cb or callback function params: error message (null if no error) and user data (only the id)
+    // cb or callback function params: error message (null if no error) and user data (only the id)
     cb(null, user.id)
 })
 
-//Deserialize: takes a user id and looks up the best of the info
+// Deserialize: takes a user id and looks up the best of the info
 passport.deserializeUser((id, cb) => {
     db.user.findByPk(id)
     .then( user => {
-        //callback(error message, user data)
+        // callback(error message, user data)
         cb(null, user)
     })
     .catch(cb)
 })
 
-//Implement the local strategy (local database)
-//Given email, find user, get me info or error
+// Implement the local strategy (local database)
+// Given email, find user, get me info or error
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
 }, (email, password, cb) => {
-    //Try looking up user by email
+    // Try looking up user by email
     db.user.findOne({
         where: { email: email }
     })
     .then( foundUser => {
-        //Check if I found user; then check their password
+        // Check if I found user; then check their password
         if (!foundUser || !foundUser.validPassword(password)) {
-            //uh-oh, bad user or maybe bad password
+            // uh-oh, bad user or maybe bad password
             cb(null, null)
         } else {
-            //valid user and a valid password
+            // valid user and a valid password
             cb(null, foundUser)
         }
     })
     .catch(cb)
 }))
 
-//Implement Github strategy
+// Implement Github strategy
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_SECRET,
@@ -78,7 +77,7 @@ passport.use(new GithubStrategy({
         }
     })
     .then(([user, wasCreated]) => {
-        //Find out if user was already github user and if so, need new token
+        // Find out if user was already github user and if so, need new token
         if (!wasCreated && user.githubId) {
             user.update({
                 githubToken: accessToken
@@ -94,7 +93,7 @@ passport.use(new GithubStrategy({
     .catch(cb)
 }))
 
-//Implement Facebook strategy
+// Implement Facebook strategy
 passport.use(new FacebookStategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
@@ -102,12 +101,12 @@ passport.use(new FacebookStategy({
     profileFields: ['id', 'displayName', 'photos', 'email']
 }, (accessToken, refreshToken, profile, cb) => {
     console.log('Facebook Login', profile)
-    //Grab the facebook primary email
+    // Grab the facebook primary email
     let facebookEmail = profile.emails ? profile.emails[0].value : null
     let displayName = profile.displayName.split(' ')
     let photo = profile.photos.length ? profile.photos[0].value : 'https://res.cloudinary.com/briezh/image/upload/v1555956782/tg57atqguantflp2q2e5.jpg'
 
-    //Look for the email in the local database -- DO NOT DUPLICATE
+    // Look for the email in the local database -- DO NOT DUPLICATE
     db.user.findOrCreate({
         where: { 
             email: facebookEmail,
@@ -125,12 +124,12 @@ passport.use(new FacebookStategy({
         }
     })
     .then(([user, wasCreated]) => {
-        //Did we create a new user?
+        // Did we create a new user?
         if (wasCreated || user.facebookId) {
-            //New user, not found in local database
+            // New user, not found in local database
             cb(null, user)
         } else {
-            //We found an existing user
+            // We found an existing user
             user.update({
                 facebookId: profile.id,
                 facebookToken: accessToken
@@ -144,5 +143,4 @@ passport.use(new FacebookStategy({
     .catch(cb)
 }))
 
-//Make sure you can include this file in other files
 module.exports = passport

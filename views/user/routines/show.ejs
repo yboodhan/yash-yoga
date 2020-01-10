@@ -56,16 +56,15 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
 
 <script>
-  //play ding at end of a pose to alert person
-  //play sound at end, alert last pose
-  //give 5 seconds to get into new pose, start timer
+
+// NOTE: CAN USE FUNCTIONS TO SIMPLIFY AND DRY THE FOLLOWING:
+
 document.addEventListener('DOMContentLoaded', () => {
   let startButton = document.getElementById('start_routine_button')
   let stopButton = document.getElementById('stop_routine_button')
   let replayButton = document.getElementById('replay_routine_button')
   let slideNumer = 0
   let poses = <%- JSON.stringify(poses) %>
-  console.log(poses)
   let currentSlide
   let nextSlide
   let length_of_pose
@@ -85,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds + ' seconds'
       interval = setInterval( () => {
         if (seconds > 0) {
-        seconds--
+          seconds--
         if (currentSlide == poses.length - 1 && seconds == 0) {
           document.getElementById('timer').innerHTML = 'ROUTINE COMPLETE! CONGRATS!'
           document.getElementById('<%= routine.music %>').pause()
@@ -96,26 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('timer').innerHTML = 'Time remaining: ' + seconds  + ' seconds'
         }
       }
-      }, 1000)
+    }, 1000)
   }
 
   const swapSlide = () => {
     $('.my-carousel').slick('slickNext')
     document.getElementById('ding').play()
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
-    console.log(currentSlide)
     nextSlide = currentSlide + 1
     length_of_pose = poses[currentSlide].routines_poses.duration * 1000
-    console.log(length_of_pose)
     timer(poses[currentSlide].routines_poses.duration)
+
     if (nextSlide < poses.length) {
       document.getElementById('next_pose').src = poses[nextSlide].img_url
       timeout = setTimeout(swapSlide, length_of_pose)
     } else {
       document.getElementsByClassName('next_pose')[0].style.display = 'none'
     }
-
-    //if at end then do something different
   }
 
   let arrows = Array.from(document.getElementsByClassName('slick-arrow'))
@@ -130,9 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
     document.getElementById('timer').innerHTML = 'Time remaining: ' + poses[currentSlide].routines_poses.duration  + ' seconds'
     let nextSlide = currentSlide + 1
+
     if (nextSlide < poses.length) {
-      console.log(nextSlide)
-      console.log(poses[nextSlide])
       document.getElementById('next_pose').src = poses[nextSlide].img_url
       document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
     } else {
@@ -146,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(timeout)
     currentSlide = $('.my-carousel').slick('slickCurrentSlide')
     nextSlide = currentSlide + 1
+
     if (nextSlide < poses.length) {
       document.getElementById('next_pose').src = poses[nextSlide].img_url
       document.getElementsByClassName('next_pose')[0].style.display = 'inline-block'
@@ -159,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startButton.style.display = 'none'
     stopButton.style.display = 'inline-block'
     document.getElementById('<%= routine.music %>').play()
+
     stopButton.addEventListener( 'click', () => {
       document.getElementById('<%= routine.music %>').pause()
       $('.my-carousel').slick('slickPause')
@@ -167,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stopButton.style.display = 'none'
       startButton.style.display = 'inline-block'
     })
+    
     replayButton.addEventListener( 'click', () => {
       replayButton.style.display = 'none'
       $('.my-carousel').slick('slickGoTo', 0)

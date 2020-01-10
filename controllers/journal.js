@@ -2,6 +2,7 @@ let router = require('express').Router()
 let isLoggedIn = require('../middleware/isLoggedIn')
 let db = require('../models')
 
+// Show all journal entries for the logged in user
 router.get('/', isLoggedIn, (req, res) => {
     db.entry.findAll({
         where: {userId: req.user.id}
@@ -15,10 +16,12 @@ router.get('/', isLoggedIn, (req, res) => {
     })
 })
 
+// Form to allow user to add a new entry
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/journal/new')
 })
 
+// Delete an existing journal entry and redirect to all journals
 router.delete('/:id', isLoggedIn, (req, res) => {
     db.entry.destroy({
         where: { id: req.params.id }
@@ -32,6 +35,7 @@ router.delete('/:id', isLoggedIn, (req, res) => {
     })
 })
 
+// Create a new journal entry and redirect to all journals
 router.post('/', isLoggedIn, (req, res) => {
     db.entry.create({
         title: req.body.title,
@@ -47,6 +51,7 @@ router.post('/', isLoggedIn, (req, res) => {
     })
 })
 
+// Form to edit an existing journal entry
 router.get('/edit/:id', isLoggedIn, (req, res) => {
     db.entry.findOne({
         where: { id: req.params.id }
@@ -60,6 +65,7 @@ router.get('/edit/:id', isLoggedIn, (req, res) => {
     })
 })
 
+// Update an existing journal entry
 router.put('/', isLoggedIn, (req, res) => {
     db.entry.update({
         title: req.body.title,
@@ -76,6 +82,7 @@ router.put('/', isLoggedIn, (req, res) => {
     })
 })
 
+// Display a specific journal entry
 router.get('/:id', isLoggedIn, (req, res) => {
     db.entry.findOne({
         where: { id: req.params.id }

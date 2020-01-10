@@ -2,10 +2,10 @@ let router = require('express').Router()
 let isLoggedIn = require('../middleware/isLoggedIn')
 let db = require('../models')
 let async = require('async')
-//Get JSON file of all yoga pose info
+// Get JSON file of all yoga pose info
 let poses = require('../yoga_api.json')
 
-//Routines home route, lists all routines
+// Routines home route, lists all routines
 router.get('/', isLoggedIn, (req, res) => {
     db.routine.findAll({
         where: {userId: req.user.id}
@@ -19,12 +19,12 @@ router.get('/', isLoggedIn, (req, res) => {
     })
 })
 
-//Form to create a new routine
+// Form to create a new routine
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/routines/new', { poses: poses })
 })
 
-//Form to edit an existing routine
+// Form to edit an existing routine
 router.get('/edit/:id', isLoggedIn, (req, res) => {
     db.routine.findOne({
         where: { id: req.params.id },
@@ -58,7 +58,7 @@ router.get('/edit/:id', isLoggedIn, (req, res) => {
     })
 })
 
-//Update an existing routine
+// Update an existing routine
 router.put('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
     let duration = req.body.duration
@@ -78,21 +78,16 @@ router.put('/', isLoggedIn, (req, res) => {
     .then( () => {
         console.log('UPDATED')
         async.forEachOf(poses, (p, index, done) => {
-            console.log(p)
             db.pose.findOne({ 
                 where: {sanskrit_name: p}
             })
             .then( (pose) => {
-                console.log('ADDING POSES')
-                console.log(pose)
-                console.log('duration at index ', index, ' is ', duration[index])
                 db.routines_poses.create({
                     poseId: pose.id,
                     routineId: req.body.routineId,
                     duration: duration[index] 
                 })
                 .then(() => {
-                    console.log('DONE ADDING POSES!')
                     done()
                 })
                 .catch( (error) => {
@@ -114,18 +109,16 @@ router.put('/', isLoggedIn, (req, res) => {
     })
 })
 
-//Delete an existing routine
+// Delete an existing routine
 router.delete('/:id', isLoggedIn, (req, res) => {
     db.routine.destroy({
       where: { id: req.params.id }
     })
     .then( () => {
-        console.log('🧘🏽‍♀️ Deleted routine', req.params.id)
         db.routines_poses.destroy({
             where: { routineId: req.params.id }
         })
         .then ( () => {
-            console.log('🧘🏽‍♀️ Destroyed in link table')
             res.redirect('/routines')
         })
         .catch( (error) => {
@@ -139,7 +132,7 @@ router.delete('/:id', isLoggedIn, (req, res) => {
     })
 })
 
-//Create a new routine and add it's corresponding poses and duration for each pose
+// Create a new routine and add it's corresponding poses and duration for each pose
 router.post('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
     let duration = req.body.duration
@@ -183,7 +176,7 @@ router.post('/', isLoggedIn, (req, res) => {
     })
 })
 
-//View the specific routine and it's poses, play slideshow
+// View the specific routine and it's poses, play slideshow
 router.get('/:id', isLoggedIn, (req, res) => {
     let id = req.params.id
     db.routine.findOne( {

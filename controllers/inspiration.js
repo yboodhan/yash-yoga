@@ -3,8 +3,8 @@ let db = require('../models')
 let axios = require('axios')
 let isLoggedIn = require('../middleware/isLoggedIn')
 
+// Show the user a daily quote, other users and puvlic routines
 router.get('/', isLoggedIn, (req, res) => {
-
     axios.get('https://quote-garden.herokuapp.com/quotes/random')
     .then( response => {
         db.user.findAll()
@@ -13,7 +13,6 @@ router.get('/', isLoggedIn, (req, res) => {
                 where: { private: false },
             })
             .then ( publicRoutines => {
-                console.log(publicRoutines)
                 res.render('user/inspiration/index', { quote: response.data, users, currentUser: req.user, publicRoutines })
             })
         })

@@ -59,7 +59,7 @@ A combination of making physical notes, using comments throughout the process, a
 * The `readme.md` file was edited to summarize the app.
 
 ## Further Goals:
-Due to the lack of time, code was not DRY and contains console.logs from testing as well. One big place for DRY code to be used is in the script of the show.ejs file for the slideshow of each routine (views/users/routines/show.ejs). There was repition of code that should be incorporated into a function which is then called. If given more time, code would be cleaner and easier to read/understand.
+Due to the lack of time, the code was not particularly DRY. One big place for DRY code to be used is in the script of the show.ejs file for the slideshow of each routine (views/users/routines/show.ejs). There was repition of code that should be incorporated into a function which is then called. If given more time, code would be cleaner and easier to read/understand.
 
 While the app allows the user to edit their routine, this functionality is limited in that users cannot modify poses already added to the routine and cannot remove poses -- they can only ever add. Of course this is not ideal and if given more time, I would try to incorporate the functionality to edit existing poses in a routine and remove poses as well.
 
