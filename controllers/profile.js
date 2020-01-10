@@ -28,13 +28,28 @@ router.put('/', isLoggedIn, (req, res) => {
   },{
     where: { id: req.user.id }
   })
-  .then( routine => {
+  .then( () => {
     res.redirect('/profile')
   })
   .catch( (error) => {
     console.log(error)
     res.render('error')
+  })
 })
+
+router.get('/:id', isLoggedIn, (req, res) => {
+  db.user.findOne({
+    where: { id: req.params.id },
+    include: [db.routine]
+  })
+  .then( user => {
+    console.log(user, '🧘🏽‍♀️')
+    res.render('profile/show', { user })
+  })
+  .catch( (error) => {
+    console.log(error)
+    res.render('error')
+  })
 })
 
 // Export the router object so we can include it in the other files

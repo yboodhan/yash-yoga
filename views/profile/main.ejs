@@ -3,14 +3,14 @@
 <hr>
 
 <div class="row">
-    <div class="col s4">
-        <img class="responsive-img profile" alt="user image" src="<%= user.photoUrl %>">
+    <div class="col-5">
+        <img class="img-fluid profile" alt="user image" src="<%= user.photoUrl %>">
         <br>
         <hr>
         <a href="/profile/edit"><button>Edit <i class="fa fa-pencil"></i></button></a>
 
     </div>
-    <div class="col s8 left-align">
+    <div class="col-7 left-align">
         <h2>Full name: <%= user.firstname %> <%= user.lastname %></h2>
         <h4><strong>Admin Status:</strong> <%= user.admin ? 'Yes' : 'No' %></h4>
         <hr>
