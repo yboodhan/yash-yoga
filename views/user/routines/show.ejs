@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         seconds--
         if (currentSlide == poses.length - 1 && seconds == 0) {
           document.getElementById('timer').innerHTML = 'ROUTINE COMPLETE! CONGRATS!'
+          document.getElementById('<%= routine.music %>').pause()
           stopButton.style.display = 'none'
           startButton.style.display = 'none'
           replayButton.style.display = 'inline-block'
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let arrows = Array.from(document.getElementsByClassName('slick-arrow'))
   arrows.forEach( arrow => {
     arrow.addEventListener( 'click', () => {
+    document.getElementById('<%= routine.music %>').pause()
     clearInterval(interval)
     clearTimeout(timeout)
     $('.my-carousel').slick('slickPause')
