@@ -5,4 +5,8 @@ router.get('/', isLoggedIn, (req, res) => {
     res.render('user/journal/index')
 })
 
+router.get('/new', isLoggedIn, (req, res) => {
+    res.render('user/journal/new')
+})
+
 module.exports = router

@@ -64,17 +64,3 @@
         </button>
     </form>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.datepicker')
-    let startDate = new Date()
-    startDate.setFullYear(startDate.getFullYear() - 30)
-    var instances = M.Datepicker.init(elems, {
-        autoClose: true,
-        defaultDate: startDate,
-        minYear: startDate.getFullYear() - 70,
-        maxYear: (new Date()).getFullYear()
-    })
-  })
-</script>
