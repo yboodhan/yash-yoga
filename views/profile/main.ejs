@@ -7,13 +7,7 @@
         <img class="responsive-img profile" alt="user image" src="<%= user.photoUrl %>">
         <br>
         <hr>
-        <form>
-            <!-- create hidden form to allow editing of user info -->
-
-            <button class="submit" type="submit" name="action">Edit Profile
-                <i class="fa fa-pencil"></i>
-            </button>
-        </form>
+        <a href="/profile/edit/<%= user.id %>"><button>Edit</button></a>
 
     </div>
     <div class="col s8 left-align">

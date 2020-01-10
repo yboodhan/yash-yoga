@@ -7,7 +7,6 @@ let poses = require('../yoga_api.json')
 
 //Routines home route, lists all routines
 router.get('/', isLoggedIn, (req, res) => {
-    //Find all routines created by the user that is logged in
     db.routine.findAll({
         where: {userId: req.user.id}
     })

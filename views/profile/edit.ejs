@@ -1,0 +1,21 @@
+<h1>Editing your profile:</h1>
+
+<hr>
+
+<form method="POST" action="/profile/edit/?_method=PUT" class="col s12">
+    <div class="row">
+    <div class="form-group col-12">
+        <label for="email">Email</label>
+        <input id="email" type="email" class="form-control validate" name="email">
+    </div>
+    </div>
+    <div class="row">
+    <div class="form-group col-12">
+        <label for="password">Password</label>
+        <input id="password" type="password" class="form-control validate" name="password">
+    </div>
+    </div>
+    <button class="submit" type="submit" name="action">Submit
+        <i class="fa fa-paper-plane-o"></i>
+    </button>
+</form>
