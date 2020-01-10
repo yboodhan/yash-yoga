@@ -1,5 +1,3 @@
-A readme.md file with explanations of the technologies used, the approach taken, installation instructions, unsolved problems, and a link to the live site.
-
 # yash-yoga
 
 ## Description:
