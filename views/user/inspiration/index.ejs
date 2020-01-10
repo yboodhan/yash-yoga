@@ -10,7 +10,7 @@
 </div>
 
 <br>
-<br>
+<br> 
 
 <div class="row">
     <div class="col-3">
@@ -18,15 +18,17 @@
         <hr>
         <div class="scroll-panel">
             <% users.forEach ( user => { %> 
-                <div class="user-cards container">
-                    <img alt="user picture" src="<%= user.photoUrl %>" height="70" class="float-left user-photo">
-                    <div class="left-align">
-                        <h5><strong><%= user.username %></strong></h5>
-                        <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
-                        <p class="text-truncate"><%= user.bio %></p>
+                <% if (user.id != currentUser.id) { %>
+                    <div class="user-cards container">
+                        <img alt="user picture" src="<%= user.photoUrl %>" height="70" class="float-left user-photo">
+                        <div class="left-align">
+                            <h5><strong><%= user.username %></strong></h5>
+                            <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
+                            <p class="text-truncate"><%= user.bio %></p>
+                        </div>
+                        <button>Add as friend.</button>
                     </div>
-                    <button>Add as friend.</button>
-                </div>
+                <% } %>
             <% }) %>
         </div>
     </div>
