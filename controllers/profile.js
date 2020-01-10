@@ -2,18 +2,19 @@
 let router = require('express').Router()
 let isAdminLoggedIn = require('../middleware/isAdminLoggedIn')
 let isLoggedIn = require('../middleware/isLoggedIn')
-let axios = require('axios');
 
 // Define routes
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('profile/main')
+  res.render('profile/main')
 })
 
 router.get('/admin', isAdminLoggedIn, (req, res) => {
-    res.render('profile/admin')
+  res.render('profile/admin')
 })
 
-
+router.get('/edit', isLoggedIn, (req, res) => {
+  res.render('profile/edit')
+})
 
 // Export the router object so we can include it in the other files
 module.exports = router
