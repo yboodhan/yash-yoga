@@ -22,11 +22,12 @@
                     <div class="user-cards container">
                         <img alt="user picture" src="<%= user.photoUrl %>" height="70" class="float-left user-photo">
                         <div class="left-align">
-                            <h5><strong><%= user.username %></strong></h5>
+                            <a href="/profile/<%= user.id %>" class="text-danger">
+                                <h5><strong><%= user.username %></strong></h5>
+                            </a>
                             <h6>Devotee since: <%= moment(user.createdAt).calendar() %></h6>
                             <p class="text-truncate"><%= user.bio %></p>
                         </div>
-                        <button>Add as friend.</button>
                     </div>
                 <% } %>
             <% }) %>
@@ -42,7 +43,7 @@
                     <h4><%= routine.name %></h4>
                     <% users.forEach ( user => { %> 
                         <% if (user.id == routine.userId) { %>
-                            <p>Created by: <%= user.username %></p>
+                            <p>Created by: <span><a href="/profile/<%= user.id %>" class="text-danger"><%= user.username %></a></span></p>
                         <% } %>
                     <% }) %>
                     <p><%= moment(routine.createdAt).calendar() %></p>
