@@ -1,8 +1,10 @@
 <h1><%= entry.title %></h1>
 <h3><%= moment(entry.createdAt).format('l') %></h3>
 
-<div class="container">
-    <h4><%= entry.content %></h4>
+<hr>
+
+<div class="container scroll-panel">
+    <h4 class="text-left"><%= entry.content %></h4>
 </div>
 
 <hr>

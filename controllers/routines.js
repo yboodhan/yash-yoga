@@ -59,7 +59,7 @@ router.get('/edit/:id', isLoggedIn, (req, res) => {
 })
 
 //Update an existing routine
-router.put('/', (req, res) => {
+router.put('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
     let duration = req.body.duration
     if (typeof poses === "string") { 
@@ -115,7 +115,7 @@ router.put('/', (req, res) => {
 })
 
 //Delete an existing routine
-router.delete('/:id', (req, res) => {
+router.delete('/:id', isLoggedIn, (req, res) => {
     db.routine.destroy({
       where: { id: req.params.id }
     })

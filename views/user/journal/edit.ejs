@@ -1,0 +1,25 @@
+<h1>Editing a journal entry: <%= entry.title %></h1>
+
+<div class="row">
+    <form method="POST" action="/journal/?_method=PUT" class="col-12">
+        <div class="row">
+        <div class="form-group col-12">
+            <label for="entry_title">Entry Title</label>
+            <input id="entry_title" type="text" class="validate form-control" name="title" value="<%= entry.title %>">
+        </div>
+        </div>
+
+        <div class="row">
+        <div class="form-group col-12">
+            <label for="entry_content">Entry Content</label>
+            <textarea id="entry_content" class="form-control validate" name="content" rows="10"><%= entry.content %></textarea>
+        </div>
+        </div>
+
+        <input type="hidden" name="id" value="<%= entry.id %>">
+
+        <button class="submit" type="submit">Submit revised entry!
+            <i class="fa fa-pencil-square-o"></i>
+        </button>
+    </form>
+</div>
