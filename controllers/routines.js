@@ -20,20 +20,33 @@ router.get('/', isLoggedIn, (req, res) => {
     })
 })
 
+//Form to create a new routine
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/routines/new', { poses: poses })
 })
 
-// Edit an existing routine
+//Form to edit an existing routine
 router.get('/edit/:id', isLoggedIn, (req, res) => {
     db.routine.findOne({
         where: { id: req.params.id },
         include: [db.pose]
     })
     .then ( routine => {
-        db.pose.findAll()
-        .then( poses => {
-            res.render('user/routines/edit', { routine: routine, poses: poses })
+        db.routines_poses.findAll({
+            where: { routineId: req.params.id }
+        })
+        .then(connections => {
+            let tempPoses = {}
+            routine.poses.forEach(p => tempPoses[p.id] = p)
+            let poses = connections.map(c => tempPoses[c.poseId])
+                db.pose.findAll()
+                .then( allPoses => {
+                    res.render('user/routines/edit', { routine, allPoses, poses })
+                })
+                .catch( (error) => {
+                    console.log(error)
+                    res.render('error')
+                })
         })
         .catch( (error) => {
             console.log(error)
@@ -46,8 +59,12 @@ router.get('/edit/:id', isLoggedIn, (req, res) => {
     })
 })
 
+//Update an existing routine
 router.put('/', (req, res) => {
     let poses = req.body.pose
+    if (typeof poses === "string") { 
+        poses = poses.split()
+    }
     let duration = req.body.duration
 
     db.routine.update({
@@ -61,28 +78,30 @@ router.put('/', (req, res) => {
     .then( () => {
         console.log('UPDATED')
         async.forEachOf(poses, (p, index, done) => {
+            console.log(p)
             db.pose.findOne({ 
                 where: {sanskrit_name: p}
             })
             .then( (pose) => {
                 console.log('ADDING POSES')
-                // routine.addPose(pose, { through: { duration: duration[index] }})
+                console.log(pose)
                 db.routines_poses.create({
                     poseId: pose.id,
                     routineId: req.body.routineId,
                     duration: duration[index] 
                 })
                 .then(() => {
+                    console.log('DONE ADDING POSES!')
                     done()
                 })
                 .catch( (error) => {
                     console.log(error)
-                    done()
+                    done(error)
                 })
             })
             .catch( (error) => {
                 console.log(error)
-                done()
+                done(error)
             })
         }, () => {
             res.redirect('/routines')
@@ -94,8 +113,12 @@ router.put('/', (req, res) => {
     })
 })
 
+//Create a new routine and add it's corresponding poses and duration for each pose
 router.post('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
+    if (typeof poses === "string") { 
+        poses = poses.split()
+    }
     let duration = req.body.duration
 
     db.routine.create({
@@ -116,14 +139,12 @@ router.post('/', isLoggedIn, (req, res) => {
                 })
                 .catch( (error) => {
                     console.log(error)
-                    res.render('error')
-                    done()
+                    done(error)
                 })
             })
             .catch( (error) => {
                 console.log(error)
-                res.render('error')
-                done()
+                done(error)
             })
         }, () => {
             res.redirect('/routines')
@@ -135,6 +156,7 @@ router.post('/', isLoggedIn, (req, res) => {
     })
 })
 
+//View the specific routine and it's poses, play slideshow
 router.get('/:id', isLoggedIn, (req, res) => {
     let id = req.params.id
     db.routine.findOne( {
@@ -147,11 +169,9 @@ router.get('/:id', isLoggedIn, (req, res) => {
         })
         .then(connections => {
             let tempPoses = {}
-            routine.poses.forEach(p => {
-                tempPoses[p.id] = p
-            })
+            routine.poses.forEach(p => tempPoses[p.id] = p)
             let poses = connections.map(c => tempPoses[c.poseId])
-            res.render('user/routines/show', { routine, poses} )
+            res.render('user/routines/show', { routine, poses } )
         })
         .catch( (error) => {
             console.log(error)
@@ -162,7 +182,6 @@ router.get('/:id', isLoggedIn, (req, res) => {
         console.log(error)
         res.render('error')
     })
-    
 })
 
 module.exports = router

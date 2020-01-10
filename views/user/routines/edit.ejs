@@ -16,13 +16,13 @@
             <br>
                 <div class="row">
                     <div class="col-9 text-left">
-                        <% routine.poses.forEach( p => { %>
-                                <p><%= p.sanskrit_name %></p>
+                        <% poses.forEach( p => { %>
+                                <p><%= p.sanskrit_name %> / <%= p.english_name %></p>
                         <% }) %>
                     </div>
 
                     <div class="col-3">
-                        <% routine.poses.forEach( p => { %>
+                        <% poses.forEach( p => { %>
                             <p><%= p.routines_poses.duration %> seconds</p>
                         <% }) %>
                     </div>
@@ -50,7 +50,7 @@
                         <div class="col-9">
                             <label for="poses">Pose</label>
                             <select class="form-control" name="pose" id="poses">
-                            <% poses.forEach( pose => { %>
+                            <% allPoses.forEach( pose => { %>
                                 <option value="<%= pose.sanskrit_name %>">
                                     <%= pose.id %>. <%= pose.sanskrit_name %> / <%= pose.english_name %>
                                 </option>
