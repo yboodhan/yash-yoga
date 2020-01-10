@@ -9,4 +9,8 @@ router.get('/new', isLoggedIn, (req, res) => {
     res.render('user/journal/new')
 })
 
+router.post('/', isLoggedIn, (req, res) => {
+    res.send(req.body)
+})
+
 module.exports = router
