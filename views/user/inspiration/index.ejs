@@ -36,8 +36,18 @@
     <div class="col-3">
         <h4><strong>New Routines:</strong></h4>
         <hr>
-        <div>
-            New Routines
+        <div class="scroll-panel">
+            <% publicRoutines.forEach( (routine) => { %>
+                <div class="user-cards container text-left">
+                    <h4><%= routine.name %></h4>
+                    <p>Created: <%= moment(routine.createdAt).calendar() %></p>
+                    <p>Music: <%= routine.music %> <i class="fa fa-music"></i></p>
+                    
+                    <div class="routine_buttons text-center">
+                        <a href="/routines/<%= routine.id %>"><button>View</button></a>
+                    </div>
+                </div>
+            <% }) %>
         </div>
     </div>
     <div class="col-6">

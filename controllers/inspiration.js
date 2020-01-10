@@ -10,8 +10,12 @@ router.get('/', isLoggedIn, (req, res) => {
     .then( response => {
         db.user.findAll()
         .then( users => {
-            console.log('🧘🏽‍♀️ user is:', req.user)
-            res.render('user/inspiration/index', { quote: response.data, users, currentUser: req.user })
+            db.routine.findAll({
+                where: { private: false }
+            })
+            .then ( publicRoutines => {
+                res.render('user/inspiration/index', { quote: response.data, users, currentUser: req.user, publicRoutines })
+            })
         })
     })
     .catch(err => {
