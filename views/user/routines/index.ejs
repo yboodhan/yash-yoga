@@ -5,29 +5,32 @@
 
 <h1>Your Routines:</h1> 
 
-<% routines.forEach( (routine) => { %>
-    <div class="user-cards container col-8 text-left">
-
-        <div class="routine_buttons float-right">
-            <a href="/routines/<%= routine.id %>"><button>View</button></a>
-            <a href="/routines/edit/<%= routine.id %>"><button>Edit</button></a>
-            <form action="/routines/<%= routine.id %>/?_method=DELETE" method="POST">
-                <button type="submit">Delete</button>
-            </form>
+<div class="scroll-panel">
+    <% routines.forEach( (routine) => { %>
+        <div class="user-cards container col-8 text-left">
+    
+            <div class="routine_buttons float-right">
+                <a href="/routines/<%= routine.id %>"><button>View</button></a>
+                <a href="/routines/edit/<%= routine.id %>"><button>Edit</button></a>
+                <form action="/routines/<%= routine.id %>/?_method=DELETE" method="POST">
+                    <button type="submit" class="bg-danger">Delete</button>
+                </form>
+            </div>
+    
+            <h2><%= routine.name %></h2>
+            <p>Created: <%= moment(routine.createdAt).calendar() %></p>
+            <h5>Music: <%= routine.music %> <i class="fa fa-music"></i></h5>
+            <h5>Privacy: 
+                <% if (routine.private) { %>
+                    Private
+                    <i class="fa fa-lock"></i>
+                <% } else { %>
+                    Public
+                    <i class="fa fa-unlock"></i>
+                <% } %>
+            </h5>
         </div>
+    <% }) %>
+</div>
 
-        <h2><%= routine.name %></h2>
-        <p>Created: <%= moment(routine.createdAt).calendar() %></p>
-        <h5>Music: <%= routine.music %> <i class="fa fa-music"></i></h5>
-        <h5>Privacy: 
-            <% if (routine.private) { %>
-                Private
-                <i class="fa fa-lock"></i>
-            <% } else { %>
-                Public
-                <i class="fa fa-unlock"></i>
-            <% } %>
-        </h5>
-    </div>
-<% }) %>
 
