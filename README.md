@@ -1,4 +1,4 @@
-🧘🏽‍♀️ # yash-yoga
+# 🧘🏽‍♀️ yash-yoga
 
 ## Description:
 
