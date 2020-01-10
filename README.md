@@ -31,13 +31,14 @@ This app uses JavaScript, jQuery, Node.js, PostgreSQL, HTML5, CSS, etc.
 5. Run migration by running `sequelize db:migrate`.
 
 6. Create a `.env` file to store the following values (get through Facebook Developer or Github):
-
+    ```
     * BASE_URL = 'http://localhost:3000'
     * GITHUB_CLIENT_ID
     * GITHUB_SECRET
     * FACEBOOK_CLIENT_ID
     * FACEBOOK_SECRET
     * SESSION_SECRET= 'can be anything'
+    ```
 
 7. Run the server with `nodemon`. Open browser and go to `http://localhost:3000`.
 
