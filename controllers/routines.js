@@ -115,6 +115,31 @@ router.put('/', (req, res) => {
     })
 })
 
+//Delete an existing routine
+router.delete('/:id', (req, res) => {
+    db.routine.destroy({
+      where: { id: req.params.id }
+    })
+    .then( () => {
+        console.log('🧘🏽‍♀️ Deleted routine', req.params.id)
+        db.routines_poses.destroy({
+            where: { routineId: req.params.id }
+        })
+        .then ( () => {
+            console.log('🧘🏽‍♀️ Destroyed in link table')
+            res.redirect('/routines')
+        })
+        .catch( (error) => {
+            console.log(error)
+            res.render('error')
+        })
+    })
+    .catch( (error) => {
+        console.log(error)
+        res.render('error')
+    })
+})
+
 //Create a new routine and add it's corresponding poses and duration for each pose
 router.post('/', isLoggedIn, (req, res) => {
     let poses = req.body.pose
@@ -188,18 +213,3 @@ router.get('/:id', isLoggedIn, (req, res) => {
 })
 
 module.exports = router
-
-// router.delete('/:id', (req, res) => {
-//     db.project.destroy({
-//       where: { id: req.params.id }
-//     })
-//     .then( () => {
-//       db.project.findAll()
-//       .then(function(projects) {
-//         res.render('main/index', { projects })
-//       })
-//     })
-//     .catch((error) => {
-//       res.status(400).render('main/404')
-//     })
-//   })

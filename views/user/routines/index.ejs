@@ -11,7 +11,9 @@
         <div class="routine_buttons float-right">
             <a href="/routines/<%= routine.id %>"><button>View</button></a>
             <a href="/routines/edit/<%= routine.id %>"><button>Edit</button></a>
-            <button>Delete</button>
+            <form action="/routines/<%= routine.id %>/?_method=DELETE" method="POST">
+                <button type="submit">Delete</button>
+            </form>
         </div>
 
         <h2><%= routine.name %></h2>
