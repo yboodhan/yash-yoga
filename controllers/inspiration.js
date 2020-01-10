@@ -11,9 +11,10 @@ router.get('/', isLoggedIn, (req, res) => {
         db.user.findAll()
         .then( users => {
             db.routine.findAll({
-                where: { private: false }
+                where: { private: false },
             })
             .then ( publicRoutines => {
+                console.log(publicRoutines)
                 res.render('user/inspiration/index', { quote: response.data, users, currentUser: req.user, publicRoutines })
             })
         })

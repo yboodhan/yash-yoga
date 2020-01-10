@@ -38,12 +38,17 @@
         <hr>
         <div class="scroll-panel">
             <% publicRoutines.forEach( (routine) => { %>
-                <div class="user-cards container text-left">
+                <div class="user-cards container">
                     <h4><%= routine.name %></h4>
-                    <p>Created: <%= moment(routine.createdAt).calendar() %></p>
+                    <% users.forEach ( user => { %> 
+                        <% if (user.id == routine.userId) { %>
+                            <p>Created by: <%= user.username %></p>
+                        <% } %>
+                    <% }) %>
+                    <p><%= moment(routine.createdAt).calendar() %></p>
                     <p>Music: <%= routine.music %> <i class="fa fa-music"></i></p>
                     
-                    <div class="routine_buttons text-center">
+                    <div class="routine_buttons">
                         <a href="/routines/<%= routine.id %>"><button>View</button></a>
                     </div>
                 </div>
